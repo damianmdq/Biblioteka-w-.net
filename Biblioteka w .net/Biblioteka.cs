@@ -38,6 +38,10 @@ namespace Biblioteka_w_Dotnet
         private DataSet DS2 = new DataSet();
         private DataTable DT2 = new DataTable();
 
+        // Czas z komputera
+        DateTime lokalnaDatata = DateTime.UtcNow.ToLocalTime();
+
+
         //Połączenie z bazą danych
         SQLiteConnection sqliteCon = new SQLiteConnection("Data Source = ./DBbiblioteka.db;Version=3;New=False;Compress=True;");
         

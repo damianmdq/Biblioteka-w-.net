@@ -28,6 +28,9 @@ namespace Biblioteka_w_Dotnet
         private DataSet DSKsiazki = new DataSet();
         private DataTable DTKsiazki = new DataTable();
 
+        // Czas z komputera
+       DateTime lokalnaData = DateTime.UtcNow.ToLocalTime();
+
         //Połączenie z bazą danych
         SQLiteConnection sqliteCon = new SQLiteConnection("Data Source = ./DBbiblioteka.db;Version=3;New=False;Compress=True;");
 
@@ -69,6 +72,7 @@ namespace Biblioteka_w_Dotnet
         // Przycisk wypożyczenie książki
         private void btnWypozycz_Click(object sender, EventArgs e)
         {
+            string dataWypozyczenia = lokalnaData.ToString();
             try
             {
              //   Biblioteka biblioteka = new Biblioteka();
@@ -76,12 +80,13 @@ namespace Biblioteka_w_Dotnet
                 
         //   string checkUser = biblioteka.dgvListaWypozyczajacych.SelectedRows[0].Cells["id_czytelnika"].Value.ToString();
 
-        sqliteCon.Open();
-                String Query = "INSERT INTO Wypozyczenia (id_czytelnik, id_ksiazka, data_wypozyczenia, data_oddania) VALUES + " +
-                               "('" + biblioteka.dgvListaWypozyczajacych.SelectedRows[0].Cells["id_czytelnik"].Value.ToString() + "', '" + dgvKsiazki.SelectedRows[0].Cells["id_ksiazka"].Value + "',  2018, 2019) ";
+       // sqliteCon.Open();
+                String Query = "INSERT INTO Wypozyczenia (id_czytelnik, id_ksiazka, data_wypozyczenia, data_oddania) VALUES " +
+                               "('" + biblioteka.dgvListaWypozyczajacych.SelectedRows[0].Cells["id_czytelnik"].Value.ToString() + "', '" + dgvKsiazki.SelectedRows[0].Cells["id_ksiazka"].Value + "', '" + dataWypozyczenia +"' , 2019) ";
                 SQLiteCommand createCommand = new SQLiteCommand(Query, sqliteCon);
                 createCommand.ExecuteNonQuery();
                 sqliteCon.Close(); 
+                MessageBox.Show("Książka została wypożyczona");
             }
             catch (Exception ex)
             {
