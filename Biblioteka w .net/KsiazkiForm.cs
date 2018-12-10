@@ -21,18 +21,25 @@ namespace Biblioteka_w_Dotnet
             InitializeComponent();
         }
 
-        
+
+        public SQLiteConnection db_connect = new SQLiteConnection("Data Source = ./DBbiblioteka.db;Version=3;New=False;Compress=True;");         //zmienna przechowująca obiekt bazy danych
+        public string db_querry = null;             //zmienna przechowująca zapytanie do bazy danych
+        public string db_querry2 = null;
+        public SQLiteCommand db_command;            //zmienna przechowująca obiekt do wysyłania zapytań
+        public SQLiteDataReader db_read;            //zmienna przechowująca odebrane informacje zwrócone dla zapytania doczytującego
 
         // DataGridView Lista Książek
         private SQLiteDataAdapter DBKsiazki;
         private DataSet DSKsiazki = new DataSet();
         private DataTable DTKsiazki = new DataTable();
 
-        // Czas z komputera
-       DateTime lokalnaData = DateTime.UtcNow.ToLocalTime();
+        
 
-        //Połączenie z bazą danych
-        SQLiteConnection sqliteCon = new SQLiteConnection("Data Source = ./DBbiblioteka.db;Version=3;New=False;Compress=True;");
+        // Czas z komputera
+        DateTime lokalnaData = DateTime.UtcNow.ToLocalTime();
+        DateTime dataOddania = DateTime.UtcNow.ToLocalTime().AddMonths(1);
+
+      
 
         // Przycisk szukanie książek
         private void btnSzukaj_Click(object sender, EventArgs e)
@@ -40,9 +47,9 @@ namespace Biblioteka_w_Dotnet
             try
             {
                 
-                sqliteCon.Open();
+                db_connect.Open();
                 String Query = 
-                "SELECT* FROM Ksiazki WHERE kategoria || ' ' || tytul || ' ' || opis || ' ' || autor || ' ' || wydawnictwo || ' ' || rok_wydania LIKE'%" + this.txtBoxSzukaj.Text +
+                "SELECT * FROM Ksiazki WHERE kategoria || ' ' || tytul || ' ' || opis || ' ' || autor || ' ' || wydawnictwo || ' ' || rok_wydania LIKE'%" + this.txtBoxSzukaj.Text +
                                         "%' OR kategoria || ' ' || tytul || ' ' || opis || ' ' || autor || ' ' || rok_wydania || ' ' || wydawnictwo LIKE'%" + this.txtBoxSzukaj.Text +
                                         "%' OR kategoria || ' ' || tytul || ' ' || opis || ' ' || wydawnictwo || ' ' || autor || ' ' || rok_wydania LIKE'%" + this.txtBoxSzukaj.Text +
                                         "%' OR kategoria || ' ' || tytul || ' ' || opis || ' ' || wydawnictwo || ' ' || rok_wydania || ' ' || autor LIKE'%" + this.txtBoxSzukaj.Text +
@@ -54,8 +61,8 @@ namespace Biblioteka_w_Dotnet
                                         "%' OR kategoria || ' ' || opis || ' ' || autor || ' ' || rok_wydania || ' ' || wydawnictwo || ' ' || tytul LIKE'%" + this.txtBoxSzukaj.Text +
                                         "%' OR kategoria || ' ' || wydawnictwo || ' ' || autor || ' ' || rok_wydania || ' ' || tytul || ' ' || opis LIKE'%" + this.txtBoxSzukaj.Text +
                                         "%' OR kategoria || ' ' || rok_wydania || ' ' || wydawnictwo || ' ' || autor || ' ' || opis || ' ' || tytul LIKE'%" + this.txtBoxSzukaj.Text + "%'";
-                SQLiteCommand createCommand = new SQLiteCommand(Query, sqliteCon);
-                DBKsiazki = new SQLiteDataAdapter(Query, sqliteCon);
+            //    SQLiteCommand createCommand = new SQLiteCommand(Query, db_connect);
+                DBKsiazki = new SQLiteDataAdapter(Query, db_connect);
                 DSKsiazki.Clear();
                 DBKsiazki.Fill(DSKsiazki);
                 DTKsiazki = DSKsiazki.Tables[0];
@@ -72,26 +79,66 @@ namespace Biblioteka_w_Dotnet
         // Przycisk wypożyczenie książki
         private void btnWypozycz_Click(object sender, EventArgs e)
         {
-            string dataWypozyczenia = lokalnaData.ToString();
             try
             {
-             //   Biblioteka biblioteka = new Biblioteka();
-                //biblioteka.dgvListaWypozyczajacych.SelectedRows[0].Cells["id_czytelnika"].Value.ToString();
-                
-        //   string checkUser = biblioteka.dgvListaWypozyczajacych.SelectedRows[0].Cells["id_czytelnika"].Value.ToString();
+                if (db_connect != null && db_connect.State == ConnectionState.Closed) { db_connect.Open(); }
+                db_querry = "SELECT ilosc_w_bibliotece FROM Ksiazki WHERE id_ksiazka = '" + dgvKsiazki.SelectedRows[0].Cells["id_ksiazka"].Value + "' ;";
+                db_command = new SQLiteCommand(db_querry, db_connect);         
+                db_read = db_command.ExecuteReader();           
+                db_read.Read();                                 
+                string iloscWBibliotece = db_read["ilosc_w_bibliotece"].ToString();
+                if ( int.Parse(iloscWBibliotece) > 0)
+                {
+                    int iloscPoWypozyczeniu = int.Parse(iloscWBibliotece) - 1; 
 
-       // sqliteCon.Open();
-                String Query = "INSERT INTO Wypozyczenia (id_czytelnik, id_ksiazka, data_wypozyczenia, data_oddania) VALUES " +
-                               "('" + biblioteka.dgvListaWypozyczajacych.SelectedRows[0].Cells["id_czytelnik"].Value.ToString() + "', '" + dgvKsiazki.SelectedRows[0].Cells["id_ksiazka"].Value + "', '" + dataWypozyczenia +"' , 2019) ";
-                SQLiteCommand createCommand = new SQLiteCommand(Query, sqliteCon);
-                createCommand.ExecuteNonQuery();
-                sqliteCon.Close(); 
-                MessageBox.Show("Książka została wypożyczona");
+                    try
+                    {
+                        if (db_connect != null && db_connect.State == ConnectionState.Closed) { db_connect.Open(); }
+                        db_querry = "INSERT INTO Wypozyczenia (id_czytelnik, id_ksiazka, data_wypozyczenia, data_oddania) VALUES " +
+                                       "('" + biblioteka.dgvListaWypozyczajacych.SelectedRows[0].Cells["id_czytelnik"].Value.ToString() + "', '" + dgvKsiazki.SelectedRows[0].Cells["id_ksiazka"].Value + "', '" + lokalnaData.ToString() + "' , '" + dataOddania.ToString() + "'); ";                       
+                        MessageBox.Show(db_querry);
+                        db_command = new SQLiteCommand(db_querry, db_connect);
+                        db_command.ExecuteNonQuery();
+                        
+                        db_querry2 = "UPDATE Ksiazki SET ilosc_w_bibliotece = '" + iloscPoWypozyczeniu + "' WHERE Ksiazki.id_ksiazka = '" + dgvKsiazki.SelectedRows[0].Cells["id_ksiazka"].Value + "'; ";
+                        MessageBox.Show(db_querry2);
+                        db_command = new SQLiteCommand(db_querry2, db_connect);
+                        db_command.ExecuteNonQuery();
+                        
+                        MessageBox.Show("Książka została wypożyczona" + lokalnaData + dataOddania + iloscPoWypozyczeniu);
+                        
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Brak niewypożyczonej książki w bibliotece");
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+
+     /*      
+                    
+                try
+                {
+                    String Query = "INSERT INTO Wypozyczenia (id_czytelnik, id_ksiazka, data_wypozyczenia, data_oddania, stan_faktyczny) VALUES " +
+                                   "('" + biblioteka.dgvListaWypozyczajacych.SelectedRows[0].Cells["id_czytelnik"].Value.ToString() + "', '" + dgvKsiazki.SelectedRows[0].Cells["id_ksiazka"].Value + "', '" + dataWypozyczenia + "' , 2019, stan_faktyczny -1 ";
+                    SQLiteCommand createCommand = new SQLiteCommand(Query, db_connect);
+                    createCommand.ExecuteNonQuery();
+                    db_connect.Close();
+                    MessageBox.Show("Książka została wypożyczona");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+           */ 
         }
 
         //Przycisk Wyjście

@@ -113,6 +113,8 @@
             this.Controls.Add(this.lblHaslo);
             this.Controls.Add(this.lblLogin);
             this.Margin = new System.Windows.Forms.Padding(2);
+            this.MaximumSize = new System.Drawing.Size(616, 405);
+            this.MinimumSize = new System.Drawing.Size(500, 300);
             this.Name = "logowanie";
             this.Text = "Biblioteka";
             this.ResumeLayout(false);

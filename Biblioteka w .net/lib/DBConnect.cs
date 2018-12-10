@@ -15,9 +15,9 @@ namespace Biblioteka_w_Dotnet.lib
     {
         private SQLiteConnection dbConnection;
         private SQLiteCommand sql_cmd;
-        private SQLiteDataAdapter DB;
-        private DataSet DS = new DataSet();
-        private DataTable DT = new DataTable();
+        private SQLiteDataAdapter DBListaWypozyczajacych;
+        private DataSet DSListaWypozyczajacych = new DataSet();
+        private DataTable DTListaWypozyczajacych = new DataTable();
 
         //ustawianie połączenia
 
@@ -56,12 +56,12 @@ namespace Biblioteka_w_Dotnet.lib
             dbConnection.Open();
             sql_cmd = dbConnection.CreateCommand();
             string CommandText = "SELECT * FROM uzytkownicy";
-            DB = new SQLiteDataAdapter(CommandText, dbConnection);
-            DS.Reset();
-            DB.Fill(DS);
-            DT = DS.Tables[0];
+            DBListaWypozyczajacych = new SQLiteDataAdapter(CommandText, dbConnection);
+            DSListaWypozyczajacych.Reset();
+            DBListaWypozyczajacych.Fill(DSListaWypozyczajacych);
+            DTListaWypozyczajacych = DSListaWypozyczajacych.Tables[0];
             var DGV = new Biblioteka();
-            DGV.dgvListaWypozyczajacych.DataSource = DT;
+            DGV.dgvListaWypozyczajacych.DataSource = DTListaWypozyczajacych;
             dbConnection.Close(); 
         }
     }
