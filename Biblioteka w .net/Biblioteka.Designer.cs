@@ -408,6 +408,7 @@
             this.btnUsunKsiazke.TabIndex = 22;
             this.btnUsunKsiazke.Text = "Usuń książkę";
             this.btnUsunKsiazke.UseVisualStyleBackColor = true;
+            this.btnUsunKsiazke.Click += new System.EventHandler(this.btnUsunKsiazke_Click);
             // 
             // btnEdytujKsiazke
             // 
@@ -427,6 +428,7 @@
             this.btnDodajKsiazke.TabIndex = 20;
             this.btnDodajKsiazke.Text = "Dodaj książkę";
             this.btnDodajKsiazke.UseVisualStyleBackColor = true;
+            this.btnDodajKsiazke.Click += new System.EventHandler(this.btnDodajKsiazke_Click);
             // 
             // lblAutor
             // 

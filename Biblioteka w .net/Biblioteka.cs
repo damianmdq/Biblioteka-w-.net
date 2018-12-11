@@ -209,7 +209,7 @@ namespace Biblioteka_w_Dotnet
             }
         }
 
-        /// ///////////// Button Szukaj Ksiażki ///////////////////
+        ///////////////// Button Szukaj Ksiażki ///////////////////
         private void btnSzukajKsiazki_Click(object sender, EventArgs e)
         {
             try
@@ -255,19 +255,67 @@ namespace Biblioteka_w_Dotnet
             txtBoxIloscWBibliotece.Text = dgvKsiazki.SelectedRows[0].Cells["ilosc_w_bibliotece"].Value.ToString();
         }
 
+        ///////////////// Button edytuj Ksiażkę ///////////////////
         private void btnEdytujKsiazke_Click(object sender, EventArgs e)
         {
             try
             {
                 if (db_connect != null && db_connect.State == ConnectionState.Closed) { db_connect.Open(); }
                 db_querry = "UPDATE Ksiazki SET kategoria = '" + txtBoxKategoria.Text.ToString() + "', tytul = '" + txtBoxTytul.Text.ToString() + "', opis = '" + txtBoxOpis.Text.ToString() + "', autor = '" + txtBoxAutor.Text.ToString() + "', wydawnictwo = '" + txtBoxWydawnictwo.Text.ToString() + "', rok_wydania = '" + txtBoxRokWydania.Text.ToString() + "', posiadana_ilosc = '" + txtBoxPosiadanaIlosc.Text.ToString() + "', ilosc_w_bibliotece = '" + txtBoxIloscWBibliotece.Text.ToString() + "' WHERE Ksiazki.id_ksiazka = '" + dgvKsiazki.SelectedRows[0].Cells["id_ksiazka"].Value.ToString() + "'; ";
-                MessageBox.Show(db_querry);
-                db_command = new SQLiteCommand(db_querry, db_connect);
-                db_command.ExecuteNonQuery();
+                DialogResult czyEdytowacKsiazke = MessageBox.Show("Czy na pewno chcesz edytować tą książkę? ", "Uwaga", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+                if (czyEdytowacKsiazke == DialogResult.Yes)
+                {
+                    db_command = new SQLiteCommand(db_querry, db_connect);
+                    db_command.ExecuteNonQuery();
+                    MessageBox.Show("Książka została edytowana");
+                }
             }
             catch (Exception ErrorEdytujKsiazke)
             {
                 MessageBox.Show(ErrorEdytujKsiazke.Message);
+            }
+        }
+
+        ///////////////// Button dodaj Ksiażkę ///////////////////
+        private void btnDodajKsiazke_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (db_connect != null && db_connect.State == ConnectionState.Closed) { db_connect.Open(); }
+                db_querry = "INSERT INTO Ksiazki (kategoria, tytul, opis, autor, wydawnictwo, rok_wydania, posiadana_ilosc, ilosc_w_bibliotece) VALUES " +
+                               "('" + txtBoxKategoria.Text.ToString() + "', '" + txtBoxTytul.Text.ToString() + "', '" + txtBoxOpis.Text.ToString() + "' , '" + txtBoxAutor.Text.ToString() + "', '" + txtBoxWydawnictwo.Text.ToString() + "', '" + txtBoxRokWydania.Text.ToString() + "', '" + txtBoxPosiadanaIlosc.Text.ToString() + "', '" + txtBoxIloscWBibliotece.Text.ToString() + "'); ";
+                DialogResult czyDodacKsiazke = MessageBox.Show("Czy na pewno chcesz dodać tą książkę? ", "Uwaga", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+                if (czyDodacKsiazke == DialogResult.Yes)
+                {
+                    db_command = new SQLiteCommand(db_querry, db_connect);
+                    db_command.ExecuteNonQuery();
+                    MessageBox.Show("Książka została dodana");
+                }
+            }
+            catch (Exception errorDodajKsiazke)
+            {
+                MessageBox.Show(errorDodajKsiazke.Message);
+            }
+        }
+
+        ///////////////// Button usuń Ksiażkę ///////////////////
+        private void btnUsunKsiazke_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (db_connect != null && db_connect.State == ConnectionState.Closed) { db_connect.Open(); }
+                db_querry = "DELETE FROM Ksiazki WHERE id_ksiazka = '" + dgvKsiazki.SelectedRows[0].Cells["id_ksiazka"].Value.ToString() + "'; ";
+                DialogResult czyUsunacKsiazke = MessageBox.Show("Czy na pewno chcesz usunąć tą książkę? ", "Uwaga", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+                if (czyUsunacKsiazke == DialogResult.Yes)
+                {
+                    db_command = new SQLiteCommand(db_querry, db_connect);
+                    db_command.ExecuteNonQuery();
+                    MessageBox.Show("Książka została usunięta");
+                }
+            }
+            catch (Exception errorEdytujKsiazke)
+            {
+                MessageBox.Show(errorEdytujKsiazke.Message);
             }
         }
     }

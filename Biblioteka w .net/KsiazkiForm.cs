@@ -96,7 +96,6 @@ namespace Biblioteka_w_Dotnet
                         if (db_connect != null && db_connect.State == ConnectionState.Closed) { db_connect.Open(); }
                         db_querry = "INSERT INTO Wypozyczenia (id_czytelnik, id_ksiazka, data_wypozyczenia, data_oddania) VALUES " +
                                        "('" + biblioteka.dgvListaWypozyczajacych.SelectedRows[0].Cells["id_czytelnik"].Value.ToString() + "', '" + dgvKsiazki.SelectedRows[0].Cells["id_ksiazka"].Value + "', '" + lokalnaData.ToString() + "' , '" + dataOddania.ToString() + "'); ";                       
-                        MessageBox.Show(db_querry);
                         db_command = new SQLiteCommand(db_querry, db_connect);
                         db_command.ExecuteNonQuery();
                         
