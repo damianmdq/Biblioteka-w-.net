@@ -33,7 +33,7 @@
             this.groupBoxKsiazkiWypozyczone = new System.Windows.Forms.GroupBox();
             this.dgvKsiazkiWypozyczone = new System.Windows.Forms.DataGridView();
             this.groupBoxWyszukiwarka = new System.Windows.Forms.GroupBox();
-            this.btnListaKsiazek = new System.Windows.Forms.Button();
+            this.btnWypozyczeniaWypozyczenie = new System.Windows.Forms.Button();
             this.lblMiejscowosc = new System.Windows.Forms.Label();
             this.lblNazwisko = new System.Windows.Forms.Label();
             this.btnEdytujOsobe = new System.Windows.Forms.Button();
@@ -41,11 +41,11 @@
             this.btnWyczysc = new System.Windows.Forms.Button();
             this.lblImie = new System.Windows.Forms.Label();
             this.btnDodajOsobe = new System.Windows.Forms.Button();
-            this.btnSzukaj = new System.Windows.Forms.Button();
+            this.btnWypozyczeniaSzukaj = new System.Windows.Forms.Button();
             this.txtBoxMiejscowosc = new System.Windows.Forms.TextBox();
             this.txtBoxNazwisko = new System.Windows.Forms.TextBox();
             this.txtBoxImie = new System.Windows.Forms.TextBox();
-            this.txtBoxDane = new System.Windows.Forms.TextBox();
+            this.txtBoxWypozyczeniaSzukaj = new System.Windows.Forms.TextBox();
             this.tabControlBiblioteka = new System.Windows.Forms.TabControl();
             this.tabPageWypozyczenia = new System.Windows.Forms.TabPage();
             this.tabPageKsiazki = new System.Windows.Forms.TabPage();
@@ -74,6 +74,26 @@
             this.groupBoxKsiazki = new System.Windows.Forms.GroupBox();
             this.dgvKsiazki = new System.Windows.Forms.DataGridView();
             this.tabPageUzytkownicy = new System.Windows.Forms.TabPage();
+            this.groupBoxCzytelnicyEdytor = new System.Windows.Forms.GroupBox();
+            this.lblCzytelnicyUlica = new System.Windows.Forms.Label();
+            this.lblCzytelnicyEmail = new System.Windows.Forms.Label();
+            this.txtBoxCzytelnicyUlica = new System.Windows.Forms.TextBox();
+            this.txtBoxCzytelnicyEmail = new System.Windows.Forms.TextBox();
+            this.lblCzytelnicyMiasto = new System.Windows.Forms.Label();
+            this.lblCzytelnicyNazwisko = new System.Windows.Forms.Label();
+            this.btnCzytelnicyEdytujCzytelnika = new System.Windows.Forms.Button();
+            this.btnCzytelnicyUsunCzytelnika = new System.Windows.Forms.Button();
+            this.btnCzytelnicyWyczysc = new System.Windows.Forms.Button();
+            this.lblCzytelnicyImie = new System.Windows.Forms.Label();
+            this.btnCzytelnicyDodajCzytelnika = new System.Windows.Forms.Button();
+            this.btnCzytelnicySzukaj = new System.Windows.Forms.Button();
+            this.txtBoxCzytelnicyMiasto = new System.Windows.Forms.TextBox();
+            this.txtBoxCzytelnicyNazwisko = new System.Windows.Forms.TextBox();
+            this.txtBoxCzytelnicyImie = new System.Windows.Forms.TextBox();
+            this.txtBoxCzytelnicySzukaj = new System.Windows.Forms.TextBox();
+            this.groupBoxCzytelnicyWypozyczajacy = new System.Windows.Forms.GroupBox();
+            this.dgvCzytelnicyListaWypozyczajacych = new System.Windows.Forms.DataGridView();
+            this.btnWypozyczeniaZwrot = new System.Windows.Forms.Button();
             this.groupBoxListaWypozyczajacych.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvListaWypozyczajacych)).BeginInit();
             this.groupBoxKsiazkiWypozyczone.SuspendLayout();
@@ -85,6 +105,10 @@
             this.groupBoxEdytor.SuspendLayout();
             this.groupBoxKsiazki.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvKsiazki)).BeginInit();
+            this.tabPageUzytkownicy.SuspendLayout();
+            this.groupBoxCzytelnicyEdytor.SuspendLayout();
+            this.groupBoxCzytelnicyWypozyczajacy.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCzytelnicyListaWypozyczajacych)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBoxListaWypozyczajacych
@@ -150,7 +174,8 @@
             // 
             this.groupBoxWyszukiwarka.AutoSize = true;
             this.groupBoxWyszukiwarka.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.groupBoxWyszukiwarka.Controls.Add(this.btnListaKsiazek);
+            this.groupBoxWyszukiwarka.Controls.Add(this.btnWypozyczeniaZwrot);
+            this.groupBoxWyszukiwarka.Controls.Add(this.btnWypozyczeniaWypozyczenie);
             this.groupBoxWyszukiwarka.Controls.Add(this.lblMiejscowosc);
             this.groupBoxWyszukiwarka.Controls.Add(this.lblNazwisko);
             this.groupBoxWyszukiwarka.Controls.Add(this.btnEdytujOsobe);
@@ -158,31 +183,29 @@
             this.groupBoxWyszukiwarka.Controls.Add(this.btnWyczysc);
             this.groupBoxWyszukiwarka.Controls.Add(this.lblImie);
             this.groupBoxWyszukiwarka.Controls.Add(this.btnDodajOsobe);
-            this.groupBoxWyszukiwarka.Controls.Add(this.btnSzukaj);
+            this.groupBoxWyszukiwarka.Controls.Add(this.btnWypozyczeniaSzukaj);
             this.groupBoxWyszukiwarka.Controls.Add(this.txtBoxMiejscowosc);
             this.groupBoxWyszukiwarka.Controls.Add(this.txtBoxNazwisko);
             this.groupBoxWyszukiwarka.Controls.Add(this.txtBoxImie);
-            this.groupBoxWyszukiwarka.Controls.Add(this.txtBoxDane);
+            this.groupBoxWyszukiwarka.Controls.Add(this.txtBoxWypozyczeniaSzukaj);
             this.groupBoxWyszukiwarka.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.groupBoxWyszukiwarka.Location = new System.Drawing.Point(9, 287);
             this.groupBoxWyszukiwarka.Margin = new System.Windows.Forms.Padding(2);
             this.groupBoxWyszukiwarka.Name = "groupBoxWyszukiwarka";
             this.groupBoxWyszukiwarka.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBoxWyszukiwarka.Size = new System.Drawing.Size(665, 263);
+            this.groupBoxWyszukiwarka.Size = new System.Drawing.Size(666, 263);
             this.groupBoxWyszukiwarka.TabIndex = 2;
             this.groupBoxWyszukiwarka.TabStop = false;
             this.groupBoxWyszukiwarka.Text = "Wyszukiwarka";
             // 
-            // btnListaKsiazek
+            // btnWypozyczeniaWypozyczenie
             // 
-            this.btnListaKsiazek.Location = new System.Drawing.Point(481, 131);
-            this.btnListaKsiazek.Margin = new System.Windows.Forms.Padding(2);
-            this.btnListaKsiazek.Name = "btnListaKsiazek";
-            this.btnListaKsiazek.Size = new System.Drawing.Size(180, 41);
-            this.btnListaKsiazek.TabIndex = 13;
-            this.btnListaKsiazek.Text = "Wypożycz";
-            this.btnListaKsiazek.UseVisualStyleBackColor = true;
-            this.btnListaKsiazek.Click += new System.EventHandler(this.btnListaKsiazek_Click);
+            this.btnWypozyczeniaWypozyczenie.Location = new System.Drawing.Point(481, 136);
+            this.btnWypozyczeniaWypozyczenie.Name = "btnWypozyczeniaWypozyczenie";
+            this.btnWypozyczeniaWypozyczenie.Size = new System.Drawing.Size(180, 38);
+            this.btnWypozyczeniaWypozyczenie.TabIndex = 0;
+            this.btnWypozyczeniaWypozyczenie.Text = "Wypożyczenie";
+            this.btnWypozyczeniaWypozyczenie.Click += new System.EventHandler(this.btnWypozyczeniaWypozyczenie_Click);
             // 
             // lblMiejscowosc
             // 
@@ -208,7 +231,7 @@
             // 
             // btnEdytujOsobe
             // 
-            this.btnEdytujOsobe.Location = new System.Drawing.Point(247, 196);
+            this.btnEdytujOsobe.Location = new System.Drawing.Point(162, 196);
             this.btnEdytujOsobe.Margin = new System.Windows.Forms.Padding(2);
             this.btnEdytujOsobe.Name = "btnEdytujOsobe";
             this.btnEdytujOsobe.Size = new System.Drawing.Size(150, 41);
@@ -218,7 +241,7 @@
             // 
             // btnUsunOsobe
             // 
-            this.btnUsunOsobe.Location = new System.Drawing.Point(469, 196);
+            this.btnUsunOsobe.Location = new System.Drawing.Point(316, 196);
             this.btnUsunOsobe.Margin = new System.Windows.Forms.Padding(2);
             this.btnUsunOsobe.Name = "btnUsunOsobe";
             this.btnUsunOsobe.Size = new System.Drawing.Size(150, 41);
@@ -249,7 +272,7 @@
             // 
             // btnDodajOsobe
             // 
-            this.btnDodajOsobe.Location = new System.Drawing.Point(31, 196);
+            this.btnDodajOsobe.Location = new System.Drawing.Point(8, 196);
             this.btnDodajOsobe.Margin = new System.Windows.Forms.Padding(2);
             this.btnDodajOsobe.Name = "btnDodajOsobe";
             this.btnDodajOsobe.Size = new System.Drawing.Size(150, 41);
@@ -257,16 +280,16 @@
             this.btnDodajOsobe.Text = "Dodaj osobę";
             this.btnDodajOsobe.UseVisualStyleBackColor = true;
             // 
-            // btnSzukaj
+            // btnWypozyczeniaSzukaj
             // 
-            this.btnSzukaj.Location = new System.Drawing.Point(481, 21);
-            this.btnSzukaj.Margin = new System.Windows.Forms.Padding(2);
-            this.btnSzukaj.Name = "btnSzukaj";
-            this.btnSzukaj.Size = new System.Drawing.Size(180, 41);
-            this.btnSzukaj.TabIndex = 4;
-            this.btnSzukaj.Text = "Szukaj";
-            this.btnSzukaj.UseVisualStyleBackColor = true;
-            this.btnSzukaj.Click += new System.EventHandler(this.btnSzukaj_Click);
+            this.btnWypozyczeniaSzukaj.Location = new System.Drawing.Point(481, 21);
+            this.btnWypozyczeniaSzukaj.Margin = new System.Windows.Forms.Padding(2);
+            this.btnWypozyczeniaSzukaj.Name = "btnWypozyczeniaSzukaj";
+            this.btnWypozyczeniaSzukaj.Size = new System.Drawing.Size(180, 41);
+            this.btnWypozyczeniaSzukaj.TabIndex = 4;
+            this.btnWypozyczeniaSzukaj.Text = "Szukaj";
+            this.btnWypozyczeniaSzukaj.UseVisualStyleBackColor = true;
+            this.btnWypozyczeniaSzukaj.Click += new System.EventHandler(this.btnWypozyczeniaSzukaj_Click);
             // 
             // txtBoxMiejscowosc
             // 
@@ -295,17 +318,17 @@
             this.txtBoxImie.Size = new System.Drawing.Size(254, 32);
             this.txtBoxImie.TabIndex = 1;
             // 
-            // txtBoxDane
+            // txtBoxWypozyczeniaSzukaj
             // 
-            this.txtBoxDane.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.txtBoxDane.ForeColor = System.Drawing.SystemColors.ScrollBar;
-            this.txtBoxDane.Location = new System.Drawing.Point(99, 24);
-            this.txtBoxDane.Margin = new System.Windows.Forms.Padding(2);
-            this.txtBoxDane.Name = "txtBoxDane";
-            this.txtBoxDane.Size = new System.Drawing.Size(352, 32);
-            this.txtBoxDane.TabIndex = 0;
-            this.txtBoxDane.Text = "Wprowadź imię, nazwisko lub miejscowość";
-            this.txtBoxDane.MouseClick += new System.Windows.Forms.MouseEventHandler(this.txtBoxDane_MouseClick);
+            this.txtBoxWypozyczeniaSzukaj.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.txtBoxWypozyczeniaSzukaj.ForeColor = System.Drawing.SystemColors.ScrollBar;
+            this.txtBoxWypozyczeniaSzukaj.Location = new System.Drawing.Point(99, 24);
+            this.txtBoxWypozyczeniaSzukaj.Margin = new System.Windows.Forms.Padding(2);
+            this.txtBoxWypozyczeniaSzukaj.Name = "txtBoxWypozyczeniaSzukaj";
+            this.txtBoxWypozyczeniaSzukaj.Size = new System.Drawing.Size(352, 32);
+            this.txtBoxWypozyczeniaSzukaj.TabIndex = 0;
+            this.txtBoxWypozyczeniaSzukaj.Text = "Wprowadź imię, nazwisko lub miejscowość";
+            this.txtBoxWypozyczeniaSzukaj.MouseClick += new System.Windows.Forms.MouseEventHandler(this.txtBoxWypozyczeniaSzukaj_MouseClick);
             // 
             // tabControlBiblioteka
             // 
@@ -603,12 +626,248 @@
             // 
             // tabPageUzytkownicy
             // 
+            this.tabPageUzytkownicy.Controls.Add(this.groupBoxCzytelnicyEdytor);
+            this.tabPageUzytkownicy.Controls.Add(this.groupBoxCzytelnicyWypozyczajacy);
             this.tabPageUzytkownicy.Location = new System.Drawing.Point(4, 4);
             this.tabPageUzytkownicy.Name = "tabPageUzytkownicy";
             this.tabPageUzytkownicy.Size = new System.Drawing.Size(1032, 558);
             this.tabPageUzytkownicy.TabIndex = 2;
-            this.tabPageUzytkownicy.Text = "Użytkownicy";
+            this.tabPageUzytkownicy.Text = "Czytelnicy";
             this.tabPageUzytkownicy.UseVisualStyleBackColor = true;
+            // 
+            // groupBoxCzytelnicyEdytor
+            // 
+            this.groupBoxCzytelnicyEdytor.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.groupBoxCzytelnicyEdytor.Controls.Add(this.lblCzytelnicyUlica);
+            this.groupBoxCzytelnicyEdytor.Controls.Add(this.lblCzytelnicyEmail);
+            this.groupBoxCzytelnicyEdytor.Controls.Add(this.txtBoxCzytelnicyUlica);
+            this.groupBoxCzytelnicyEdytor.Controls.Add(this.txtBoxCzytelnicyEmail);
+            this.groupBoxCzytelnicyEdytor.Controls.Add(this.lblCzytelnicyMiasto);
+            this.groupBoxCzytelnicyEdytor.Controls.Add(this.lblCzytelnicyNazwisko);
+            this.groupBoxCzytelnicyEdytor.Controls.Add(this.btnCzytelnicyEdytujCzytelnika);
+            this.groupBoxCzytelnicyEdytor.Controls.Add(this.btnCzytelnicyUsunCzytelnika);
+            this.groupBoxCzytelnicyEdytor.Controls.Add(this.btnCzytelnicyWyczysc);
+            this.groupBoxCzytelnicyEdytor.Controls.Add(this.lblCzytelnicyImie);
+            this.groupBoxCzytelnicyEdytor.Controls.Add(this.btnCzytelnicyDodajCzytelnika);
+            this.groupBoxCzytelnicyEdytor.Controls.Add(this.btnCzytelnicySzukaj);
+            this.groupBoxCzytelnicyEdytor.Controls.Add(this.txtBoxCzytelnicyMiasto);
+            this.groupBoxCzytelnicyEdytor.Controls.Add(this.txtBoxCzytelnicyNazwisko);
+            this.groupBoxCzytelnicyEdytor.Controls.Add(this.txtBoxCzytelnicyImie);
+            this.groupBoxCzytelnicyEdytor.Controls.Add(this.txtBoxCzytelnicySzukaj);
+            this.groupBoxCzytelnicyEdytor.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.groupBoxCzytelnicyEdytor.Location = new System.Drawing.Point(6, 293);
+            this.groupBoxCzytelnicyEdytor.Margin = new System.Windows.Forms.Padding(2);
+            this.groupBoxCzytelnicyEdytor.Name = "groupBoxCzytelnicyEdytor";
+            this.groupBoxCzytelnicyEdytor.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBoxCzytelnicyEdytor.Size = new System.Drawing.Size(1009, 263);
+            this.groupBoxCzytelnicyEdytor.TabIndex = 3;
+            this.groupBoxCzytelnicyEdytor.TabStop = false;
+            this.groupBoxCzytelnicyEdytor.Text = "Wyszukiwarka";
+            // 
+            // lblCzytelnicyUlica
+            // 
+            this.lblCzytelnicyUlica.AutoSize = true;
+            this.lblCzytelnicyUlica.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lblCzytelnicyUlica.Location = new System.Drawing.Point(444, 123);
+            this.lblCzytelnicyUlica.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblCzytelnicyUlica.Name = "lblCzytelnicyUlica";
+            this.lblCzytelnicyUlica.Size = new System.Drawing.Size(51, 24);
+            this.lblCzytelnicyUlica.TabIndex = 17;
+            this.lblCzytelnicyUlica.Text = "Ulica";
+            // 
+            // lblCzytelnicyEmail
+            // 
+            this.lblCzytelnicyEmail.AutoSize = true;
+            this.lblCzytelnicyEmail.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lblCzytelnicyEmail.Location = new System.Drawing.Point(24, 160);
+            this.lblCzytelnicyEmail.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblCzytelnicyEmail.Name = "lblCzytelnicyEmail";
+            this.lblCzytelnicyEmail.Size = new System.Drawing.Size(57, 24);
+            this.lblCzytelnicyEmail.TabIndex = 16;
+            this.lblCzytelnicyEmail.Text = "Email";
+            // 
+            // txtBoxCzytelnicyUlica
+            // 
+            this.txtBoxCzytelnicyUlica.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.txtBoxCzytelnicyUlica.Location = new System.Drawing.Point(512, 123);
+            this.txtBoxCzytelnicyUlica.Margin = new System.Windows.Forms.Padding(2);
+            this.txtBoxCzytelnicyUlica.Name = "txtBoxCzytelnicyUlica";
+            this.txtBoxCzytelnicyUlica.Size = new System.Drawing.Size(254, 32);
+            this.txtBoxCzytelnicyUlica.TabIndex = 15;
+            // 
+            // txtBoxCzytelnicyEmail
+            // 
+            this.txtBoxCzytelnicyEmail.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.txtBoxCzytelnicyEmail.Location = new System.Drawing.Point(162, 160);
+            this.txtBoxCzytelnicyEmail.Margin = new System.Windows.Forms.Padding(2);
+            this.txtBoxCzytelnicyEmail.Name = "txtBoxCzytelnicyEmail";
+            this.txtBoxCzytelnicyEmail.Size = new System.Drawing.Size(254, 32);
+            this.txtBoxCzytelnicyEmail.TabIndex = 14;
+            // 
+            // lblCzytelnicyMiasto
+            // 
+            this.lblCzytelnicyMiasto.AutoSize = true;
+            this.lblCzytelnicyMiasto.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lblCzytelnicyMiasto.Location = new System.Drawing.Point(444, 78);
+            this.lblCzytelnicyMiasto.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblCzytelnicyMiasto.Name = "lblCzytelnicyMiasto";
+            this.lblCzytelnicyMiasto.Size = new System.Drawing.Size(64, 24);
+            this.lblCzytelnicyMiasto.TabIndex = 12;
+            this.lblCzytelnicyMiasto.Text = "Miasto";
+            // 
+            // lblCzytelnicyNazwisko
+            // 
+            this.lblCzytelnicyNazwisko.AutoSize = true;
+            this.lblCzytelnicyNazwisko.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lblCzytelnicyNazwisko.Location = new System.Drawing.Point(15, 115);
+            this.lblCzytelnicyNazwisko.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblCzytelnicyNazwisko.Name = "lblCzytelnicyNazwisko";
+            this.lblCzytelnicyNazwisko.Size = new System.Drawing.Size(90, 24);
+            this.lblCzytelnicyNazwisko.TabIndex = 11;
+            this.lblCzytelnicyNazwisko.Text = "Nazwisko";
+            // 
+            // btnCzytelnicyEdytujCzytelnika
+            // 
+            this.btnCzytelnicyEdytujCzytelnika.Location = new System.Drawing.Point(247, 196);
+            this.btnCzytelnicyEdytujCzytelnika.Margin = new System.Windows.Forms.Padding(2);
+            this.btnCzytelnicyEdytujCzytelnika.Name = "btnCzytelnicyEdytujCzytelnika";
+            this.btnCzytelnicyEdytujCzytelnika.Size = new System.Drawing.Size(150, 41);
+            this.btnCzytelnicyEdytujCzytelnika.TabIndex = 7;
+            this.btnCzytelnicyEdytujCzytelnika.Text = "Edytuj osobę";
+            this.btnCzytelnicyEdytujCzytelnika.UseVisualStyleBackColor = true;
+            this.btnCzytelnicyEdytujCzytelnika.Click += new System.EventHandler(this.btnCzytelnicyEdytujCzytelnika_Click);
+            // 
+            // btnCzytelnicyUsunCzytelnika
+            // 
+            this.btnCzytelnicyUsunCzytelnika.Location = new System.Drawing.Point(469, 196);
+            this.btnCzytelnicyUsunCzytelnika.Margin = new System.Windows.Forms.Padding(2);
+            this.btnCzytelnicyUsunCzytelnika.Name = "btnCzytelnicyUsunCzytelnika";
+            this.btnCzytelnicyUsunCzytelnika.Size = new System.Drawing.Size(150, 41);
+            this.btnCzytelnicyUsunCzytelnika.TabIndex = 8;
+            this.btnCzytelnicyUsunCzytelnika.Text = "Usuń osobę";
+            this.btnCzytelnicyUsunCzytelnika.UseVisualStyleBackColor = true;
+            this.btnCzytelnicyUsunCzytelnika.Click += new System.EventHandler(this.btnCzytelnicyUsunCzytelnika_Click);
+            // 
+            // btnCzytelnicyWyczysc
+            // 
+            this.btnCzytelnicyWyczysc.Location = new System.Drawing.Point(806, 92);
+            this.btnCzytelnicyWyczysc.Margin = new System.Windows.Forms.Padding(2);
+            this.btnCzytelnicyWyczysc.Name = "btnCzytelnicyWyczysc";
+            this.btnCzytelnicyWyczysc.Size = new System.Drawing.Size(180, 41);
+            this.btnCzytelnicyWyczysc.TabIndex = 5;
+            this.btnCzytelnicyWyczysc.Text = "Wyczyść";
+            this.btnCzytelnicyWyczysc.UseVisualStyleBackColor = true;
+            this.btnCzytelnicyWyczysc.Click += new System.EventHandler(this.btnCzytelnicyWyczysc_Click);
+            // 
+            // lblCzytelnicyImie
+            // 
+            this.lblCzytelnicyImie.AutoSize = true;
+            this.lblCzytelnicyImie.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lblCzytelnicyImie.Location = new System.Drawing.Point(36, 74);
+            this.lblCzytelnicyImie.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblCzytelnicyImie.Name = "lblCzytelnicyImie";
+            this.lblCzytelnicyImie.Size = new System.Drawing.Size(45, 24);
+            this.lblCzytelnicyImie.TabIndex = 10;
+            this.lblCzytelnicyImie.Text = "Imię";
+            // 
+            // btnCzytelnicyDodajCzytelnika
+            // 
+            this.btnCzytelnicyDodajCzytelnika.Location = new System.Drawing.Point(31, 196);
+            this.btnCzytelnicyDodajCzytelnika.Margin = new System.Windows.Forms.Padding(2);
+            this.btnCzytelnicyDodajCzytelnika.Name = "btnCzytelnicyDodajCzytelnika";
+            this.btnCzytelnicyDodajCzytelnika.Size = new System.Drawing.Size(150, 41);
+            this.btnCzytelnicyDodajCzytelnika.TabIndex = 6;
+            this.btnCzytelnicyDodajCzytelnika.Text = "Dodaj osobę";
+            this.btnCzytelnicyDodajCzytelnika.UseVisualStyleBackColor = true;
+            this.btnCzytelnicyDodajCzytelnika.Click += new System.EventHandler(this.btnCzytelnicyDodajCzytelnika_Click);
+            // 
+            // btnCzytelnicySzukaj
+            // 
+            this.btnCzytelnicySzukaj.Location = new System.Drawing.Point(481, 20);
+            this.btnCzytelnicySzukaj.Margin = new System.Windows.Forms.Padding(2);
+            this.btnCzytelnicySzukaj.Name = "btnCzytelnicySzukaj";
+            this.btnCzytelnicySzukaj.Size = new System.Drawing.Size(180, 41);
+            this.btnCzytelnicySzukaj.TabIndex = 4;
+            this.btnCzytelnicySzukaj.Text = "Szukaj";
+            this.btnCzytelnicySzukaj.UseVisualStyleBackColor = true;
+            this.btnCzytelnicySzukaj.Click += new System.EventHandler(this.btnCzytelnicySzukaj_Click);
+            // 
+            // txtBoxCzytelnicyMiasto
+            // 
+            this.txtBoxCzytelnicyMiasto.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.txtBoxCzytelnicyMiasto.Location = new System.Drawing.Point(512, 78);
+            this.txtBoxCzytelnicyMiasto.Margin = new System.Windows.Forms.Padding(2);
+            this.txtBoxCzytelnicyMiasto.Name = "txtBoxCzytelnicyMiasto";
+            this.txtBoxCzytelnicyMiasto.Size = new System.Drawing.Size(254, 32);
+            this.txtBoxCzytelnicyMiasto.TabIndex = 3;
+            // 
+            // txtBoxCzytelnicyNazwisko
+            // 
+            this.txtBoxCzytelnicyNazwisko.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.txtBoxCzytelnicyNazwisko.Location = new System.Drawing.Point(162, 115);
+            this.txtBoxCzytelnicyNazwisko.Margin = new System.Windows.Forms.Padding(2);
+            this.txtBoxCzytelnicyNazwisko.Name = "txtBoxCzytelnicyNazwisko";
+            this.txtBoxCzytelnicyNazwisko.Size = new System.Drawing.Size(254, 32);
+            this.txtBoxCzytelnicyNazwisko.TabIndex = 2;
+            // 
+            // txtBoxCzytelnicyImie
+            // 
+            this.txtBoxCzytelnicyImie.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.txtBoxCzytelnicyImie.Location = new System.Drawing.Point(162, 70);
+            this.txtBoxCzytelnicyImie.Margin = new System.Windows.Forms.Padding(2);
+            this.txtBoxCzytelnicyImie.Name = "txtBoxCzytelnicyImie";
+            this.txtBoxCzytelnicyImie.Size = new System.Drawing.Size(254, 32);
+            this.txtBoxCzytelnicyImie.TabIndex = 1;
+            // 
+            // txtBoxCzytelnicySzukaj
+            // 
+            this.txtBoxCzytelnicySzukaj.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.txtBoxCzytelnicySzukaj.ForeColor = System.Drawing.SystemColors.ScrollBar;
+            this.txtBoxCzytelnicySzukaj.Location = new System.Drawing.Point(99, 24);
+            this.txtBoxCzytelnicySzukaj.Margin = new System.Windows.Forms.Padding(2);
+            this.txtBoxCzytelnicySzukaj.Name = "txtBoxCzytelnicySzukaj";
+            this.txtBoxCzytelnicySzukaj.Size = new System.Drawing.Size(352, 32);
+            this.txtBoxCzytelnicySzukaj.TabIndex = 0;
+            this.txtBoxCzytelnicySzukaj.Text = "Wprowadź dane czytelnika";
+            this.txtBoxCzytelnicySzukaj.MouseClick += new System.Windows.Forms.MouseEventHandler(this.txtBoxCzytelnicySzukaj_MouseClick);
+            // 
+            // groupBoxCzytelnicyWypozyczajacy
+            // 
+            this.groupBoxCzytelnicyWypozyczajacy.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.groupBoxCzytelnicyWypozyczajacy.Controls.Add(this.dgvCzytelnicyListaWypozyczajacych);
+            this.groupBoxCzytelnicyWypozyczajacy.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.groupBoxCzytelnicyWypozyczajacy.Location = new System.Drawing.Point(2, 9);
+            this.groupBoxCzytelnicyWypozyczajacy.Margin = new System.Windows.Forms.Padding(2);
+            this.groupBoxCzytelnicyWypozyczajacy.Name = "groupBoxCzytelnicyWypozyczajacy";
+            this.groupBoxCzytelnicyWypozyczajacy.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBoxCzytelnicyWypozyczajacy.Size = new System.Drawing.Size(1028, 278);
+            this.groupBoxCzytelnicyWypozyczajacy.TabIndex = 1;
+            this.groupBoxCzytelnicyWypozyczajacy.TabStop = false;
+            this.groupBoxCzytelnicyWypozyczajacy.Text = "Lista Wypożyczających";
+            // 
+            // dgvCzytelnicyListaWypozyczajacych
+            // 
+            this.dgvCzytelnicyListaWypozyczajacych.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvCzytelnicyListaWypozyczajacych.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.dgvCzytelnicyListaWypozyczajacych.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvCzytelnicyListaWypozyczajacych.Location = new System.Drawing.Point(4, 26);
+            this.dgvCzytelnicyListaWypozyczajacych.Margin = new System.Windows.Forms.Padding(2);
+            this.dgvCzytelnicyListaWypozyczajacych.MultiSelect = false;
+            this.dgvCzytelnicyListaWypozyczajacych.Name = "dgvCzytelnicyListaWypozyczajacych";
+            this.dgvCzytelnicyListaWypozyczajacych.RowTemplate.Height = 24;
+            this.dgvCzytelnicyListaWypozyczajacych.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvCzytelnicyListaWypozyczajacych.Size = new System.Drawing.Size(1009, 226);
+            this.dgvCzytelnicyListaWypozyczajacych.TabIndex = 1;
+            this.dgvCzytelnicyListaWypozyczajacych.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCzytelnicyListaWypozyczajacych_CellClick);
+            // 
+            // btnWypozyczeniaZwrot
+            // 
+            this.btnWypozyczeniaZwrot.Location = new System.Drawing.Point(481, 196);
+            this.btnWypozyczeniaZwrot.Name = "btnWypozyczeniaZwrot";
+            this.btnWypozyczeniaZwrot.Size = new System.Drawing.Size(180, 38);
+            this.btnWypozyczeniaZwrot.TabIndex = 13;
+            this.btnWypozyczeniaZwrot.Text = "Zwrot";
+            this.btnWypozyczeniaZwrot.Click += new System.EventHandler(this.btnWypozyczeniaZwrot_Click);
             // 
             // Biblioteka
             // 
@@ -637,6 +896,11 @@
             this.groupBoxEdytor.PerformLayout();
             this.groupBoxKsiazki.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvKsiazki)).EndInit();
+            this.tabPageUzytkownicy.ResumeLayout(false);
+            this.groupBoxCzytelnicyEdytor.ResumeLayout(false);
+            this.groupBoxCzytelnicyEdytor.PerformLayout();
+            this.groupBoxCzytelnicyWypozyczajacy.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCzytelnicyListaWypozyczajacych)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -648,7 +912,7 @@
         public System.Windows.Forms.DataGridView dgvListaWypozyczajacych;
         private System.Windows.Forms.DataGridView dgvKsiazkiWypozyczone;
         private System.Windows.Forms.GroupBox groupBoxWyszukiwarka;
-        public System.Windows.Forms.Button btnListaKsiazek;
+        public System.Windows.Forms.Button btnWypozyczeniaWypozyczenie;
         private System.Windows.Forms.Label lblMiejscowosc;
         private System.Windows.Forms.Label lblNazwisko;
         private System.Windows.Forms.Label lblImie;
@@ -656,11 +920,11 @@
         private System.Windows.Forms.Button btnEdytujOsobe;
         private System.Windows.Forms.Button btnDodajOsobe;
         private System.Windows.Forms.Button btnWyczysc;
-        private System.Windows.Forms.Button btnSzukaj;
+        private System.Windows.Forms.Button btnWypozyczeniaSzukaj;
         private System.Windows.Forms.TextBox txtBoxMiejscowosc;
         private System.Windows.Forms.TextBox txtBoxNazwisko;
         private System.Windows.Forms.TextBox txtBoxImie;
-        private System.Windows.Forms.TextBox txtBoxDane;
+        private System.Windows.Forms.TextBox txtBoxWypozyczeniaSzukaj;
         private System.Windows.Forms.TabControl tabControlBiblioteka;
         private System.Windows.Forms.TabPage tabPageWypozyczenia;
         private System.Windows.Forms.TabPage tabPageKsiazki;
@@ -689,5 +953,25 @@
         private System.Windows.Forms.DataGridView dgvKsiazki;
         private System.Windows.Forms.Button btnSzukajKsiazki;
         private System.Windows.Forms.TextBox txtBoxSzukajKsiazki;
+        private System.Windows.Forms.GroupBox groupBoxCzytelnicyEdytor;
+        private System.Windows.Forms.Label lblCzytelnicyMiasto;
+        private System.Windows.Forms.Label lblCzytelnicyNazwisko;
+        private System.Windows.Forms.Button btnCzytelnicyEdytujCzytelnika;
+        private System.Windows.Forms.Button btnCzytelnicyUsunCzytelnika;
+        private System.Windows.Forms.Button btnCzytelnicyWyczysc;
+        private System.Windows.Forms.Label lblCzytelnicyImie;
+        private System.Windows.Forms.Button btnCzytelnicyDodajCzytelnika;
+        private System.Windows.Forms.Button btnCzytelnicySzukaj;
+        private System.Windows.Forms.TextBox txtBoxCzytelnicyMiasto;
+        private System.Windows.Forms.TextBox txtBoxCzytelnicyNazwisko;
+        private System.Windows.Forms.TextBox txtBoxCzytelnicyImie;
+        private System.Windows.Forms.TextBox txtBoxCzytelnicySzukaj;
+        private System.Windows.Forms.GroupBox groupBoxCzytelnicyWypozyczajacy;
+        public System.Windows.Forms.DataGridView dgvCzytelnicyListaWypozyczajacych;
+        private System.Windows.Forms.TextBox txtBoxCzytelnicyUlica;
+        private System.Windows.Forms.TextBox txtBoxCzytelnicyEmail;
+        private System.Windows.Forms.Label lblCzytelnicyUlica;
+        private System.Windows.Forms.Label lblCzytelnicyEmail;
+        public System.Windows.Forms.Button btnWypozyczeniaZwrot;
     }
 }

@@ -49,29 +49,36 @@ namespace Biblioteka_w_Dotnet
         private DataSet DSKsiazki = new DataSet();
         private DataTable DTKsiazki = new DataTable();
 
+        // DataGridView Lista Czytelników
+        private SQLiteDataAdapter DBdgvCzytelnicyListaWypozyczajacych;
+        private DataSet DSdgvCzytelnicyListaWypozyczajacych = new DataSet();
+        private DataTable DTdgvCzytelnicyListaWypozyczajacych = new DataTable();
+
         // Czas z komputera
         DateTime lokalnaDatata = DateTime.UtcNow.ToLocalTime();
 
 
         
 
-        public void btnSzukaj_Click(object sender, EventArgs e)
+        public void btnWypozyczeniaSzukaj_Click(object sender, EventArgs e)
         {
             try
             {
                 if (db_connect != null && db_connect.State == ConnectionState.Closed) { db_connect.Open(); }
-                    String db_querry = "SELECT * FROM Czytelnicy WHERE imie || ' ' || nazwisko || ' ' || miasto LIKE'%" + this.txtBoxDane.Text + 
-                                                            "%' OR imie || ' ' || miasto || ' ' || nazwisko LIKE'%" + this.txtBoxDane.Text + 
-                                                            "%' OR nazwisko || ' ' || imie || ' ' || miasto LIKE'%" + this.txtBoxDane.Text +
-                                                            "%' OR nazwisko || ' ' || miasto || ' ' || imie LIKE'%" + this.txtBoxDane.Text +
-                                                            "%' OR miasto || ' ' || imie || ' ' || nazwisko LIKE'%" + this.txtBoxDane.Text +
-                                                            "%' OR miasto || ' ' || nazwisko || ' ' || imie LIKE'%" + this.txtBoxDane.Text + "%'";
-                    DBListaWypozyczajacych = new SQLiteDataAdapter(db_querry, db_connect);
-                    DSListaWypozyczajacych.Clear();
-                    DBListaWypozyczajacych.Fill(DSListaWypozyczajacych);
-                    DTListaWypozyczajacych = DSListaWypozyczajacych.Tables[0];
-                    dgvListaWypozyczajacych.DataSource = DTListaWypozyczajacych;
-                    this.dgvListaWypozyczajacych.Columns["id_czytelnik"].Visible = false;             
+                db_querry = "SELECT * FROM Czytelnicy WHERE imie || ' ' || nazwisko || ' ' || miasto || ' ' || ulica || ' ' || email LIKE'%" + txtBoxWypozyczeniaSzukaj.Text +
+                                                    "%' OR imie || ' ' || miasto || ' ' || nazwisko || ' ' || ulica || ' ' || email LIKE'%" + txtBoxWypozyczeniaSzukaj.Text +
+                                                    "%' OR nazwisko || ' ' || imie || ' ' || miasto || ' ' || ulica || ' ' || email LIKE'%" + txtBoxWypozyczeniaSzukaj.Text +
+                                                    "%' OR nazwisko || ' ' || miasto || ' ' || imie || ' ' || ulica || ' ' || email LIKE'%" + txtBoxWypozyczeniaSzukaj.Text +
+                                                    "%' OR ulica || ' ' || miasto || ' ' || imie || ' ' || nazwisko || ' ' || email LIKE'%" + txtBoxWypozyczeniaSzukaj.Text +
+                                                    "%' OR email || ' ' || miasto || ' ' || imie || ' ' || ulica || ' ' || nazwisko LIKE'%" + txtBoxWypozyczeniaSzukaj.Text +
+                                                    "%' OR miasto || ' ' || imie || ' ' || nazwisko || ' ' || ulica || ' ' || email LIKE'%" + txtBoxWypozyczeniaSzukaj.Text +
+                                                    "%' OR miasto || ' ' || nazwisko || ' ' || imie || ' ' || ulica || ' ' || email LIKE'%" + txtBoxWypozyczeniaSzukaj.Text + "%'";
+                DBListaWypozyczajacych = new SQLiteDataAdapter(db_querry, db_connect);
+                DSListaWypozyczajacych.Clear();
+                DBListaWypozyczajacych.Fill(DSListaWypozyczajacych);
+                DTListaWypozyczajacych = DSListaWypozyczajacych.Tables[0];
+                dgvListaWypozyczajacych.DataSource = DTListaWypozyczajacych;
+                dgvListaWypozyczajacych.Columns["id_czytelnik"].Visible = false;             
             }
             catch (Exception ex)
             {
@@ -150,7 +157,7 @@ namespace Biblioteka_w_Dotnet
                 try
                 {         
                     String Query = "SELECT " +
-                        "           Ksiazki.kategoria, Ksiazki.tytul, Ksiazki.opis, Ksiazki.autor " +
+                        "           Ksiazki.id_ksiazka, Wypozyczenia.id_wypozyczenie, Ksiazki.kategoria, Ksiazki.tytul, Ksiazki.opis, Ksiazki.autor " +
                         "           FROM " +
                         "           Ksiazki, Wypozyczenia, Czytelnicy " +
                         "           WHERE '" + this.dgvListaWypozyczajacych.SelectedRows[0].Cells["id_czytelnik"].Value.ToString() + 
@@ -163,7 +170,9 @@ namespace Biblioteka_w_Dotnet
                     DBListaWypozyczen.Fill(DSListaWypozyczen);
                     DTListaWypozyczen = DSListaWypozyczen.Tables[0];
                     dgvKsiazkiWypozyczone.DataSource = DTListaWypozyczen;
-                }
+                    dgvKsiazkiWypozyczone.Columns["id_ksiazka"].Visible = false;
+                    dgvKsiazkiWypozyczone.Columns["id_wypozyczenie"].Visible = false;
+            }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
@@ -179,27 +188,52 @@ namespace Biblioteka_w_Dotnet
             
         }
 
-        private void btnListaKsiazek_Click(object sender, EventArgs e)
+        ///////////////// Button Wypożyczenie z zakładki Wypożyczenia ///////////////////
+        private void btnWypozyczeniaWypozyczenie_Click(object sender, EventArgs e)
         {
             KsiazkiForm ksiazkiForm = new KsiazkiForm(this);
             ksiazkiForm.Owner = this;
             ksiazkiForm.ShowDialog();
-
-            //    th = new Thread(openNewForm);
-            //    th.SetApartmentState(ApartmentState.STA);
-            //    th.Start();
-
         }
 
-        private void txtBoxDane_MouseClick(object sender, MouseEventArgs e)
+        ///////////////// Button Zwrot z zakładki Wypożyczenia ///////////////////
+        private void btnWypozyczeniaZwrot_Click(object sender, EventArgs e)
         {
-            if (txtBoxDane.Text == "Wprowadź imię, nazwisko lub miejscowość")
+            try
             {
-                txtBoxDane.Text = string.Empty;
-                txtBoxDane.ForeColor = SystemColors.WindowText;
+                if (db_connect != null && db_connect.State == ConnectionState.Closed) { db_connect.Open(); }
+                db_querry = "SELECT ilosc_w_bibliotece FROM Ksiazki WHERE id_ksiazka = '" + dgvKsiazkiWypozyczone.SelectedRows[0].Cells["id_ksiazka"].Value + "' ;";
+                db_command = new SQLiteCommand(db_querry, db_connect);
+                db_read = db_command.ExecuteReader();
+                db_read.Read();
+                string iloscWBibliotece = db_read["ilosc_w_bibliotece"].ToString();
+                
+                    int iloscPoZwrocie = int.Parse(iloscWBibliotece) + 1;
+                    if (db_connect != null && db_connect.State == ConnectionState.Closed) { db_connect.Open(); }
+                    db_querry = "UPDATE Ksiazki SET ilosc_w_bibliotece = '" + iloscPoZwrocie + "' WHERE Ksiazki.id_ksiazka = '" + dgvKsiazkiWypozyczone.SelectedRows[0].Cells["id_ksiazka"].Value + "'; ";
+                    db_command = new SQLiteCommand(db_querry, db_connect);
+                    db_command.ExecuteNonQuery();
+
+                    db_querry2 = "DELETE FROM Wypozyczenia WHERE id_wypozyczenie = '" + dgvKsiazkiWypozyczone.SelectedRows[0].Cells["id_wypozyczenie"].Value.ToString() + "'; ";
+                    db_command = new SQLiteCommand(db_querry2, db_connect);
+                    db_command.ExecuteNonQuery();      
+            }
+            catch (Exception errorZwrot)
+            {
+                MessageBox.Show(errorZwrot.Message);
+            }
+        }
+        ///////////////// Reakcja po kliknięciu w text box szukaj ksiazki z zakładki Książki ///////////////////
+        private void txtBoxWypozyczeniaSzukaj_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (txtBoxWypozyczeniaSzukaj.Text == "Wprowadź imię, nazwisko lub miejscowość")
+            {
+                txtBoxWypozyczeniaSzukaj.Text = string.Empty;
+                txtBoxWypozyczeniaSzukaj.ForeColor = SystemColors.WindowText;
             }
         }
 
+        ///////////////// Reakcja po kliknięciu w text box szukaj ksiazki z zakładki Wypożyczenia ///////////////////
         private void txtBoxSzukajKsiazki_MouseClick(object sender, MouseEventArgs e)
         {
             if (txtBoxSzukajKsiazki.Text == "Wprowadź dane ksiązki, którą chcesz wyszukać")
@@ -243,6 +277,7 @@ namespace Biblioteka_w_Dotnet
             }
         }
 
+        ///////////////// Reakcja po kliknięciu w data grid view książki ///////////////////
         private void dgvKsiazki_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             txtBoxKategoria.Text = dgvKsiazki.SelectedRows[0].Cells["kategoria"].Value.ToString();
@@ -318,6 +353,129 @@ namespace Biblioteka_w_Dotnet
                 MessageBox.Show(errorEdytujKsiazke.Message);
             }
         }
+
+        ///////////////// Napis w textBoxie txtBoxCzytelnicySzukaj ///////////////////
+        private void txtBoxCzytelnicySzukaj_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (txtBoxCzytelnicySzukaj.Text == "Wprowadź dane czytelnika")
+            {
+                txtBoxCzytelnicySzukaj.Text = string.Empty;
+                txtBoxCzytelnicySzukaj.ForeColor = SystemColors.WindowText;
+            }
+        }
+
+        ///////////////// Button dodaj czytelnika ///////////////////
+        private void btnCzytelnicyDodajCzytelnika_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (db_connect != null && db_connect.State == ConnectionState.Closed) { db_connect.Open(); }
+                db_querry = "INSERT INTO Czytelnicy (imie, nazwisko, miasto, ulica, email) VALUES " +
+                               "('" + txtBoxCzytelnicyImie.Text.ToString() + "', '" + txtBoxCzytelnicyNazwisko.Text.ToString() + "', '" + txtBoxCzytelnicyMiasto.Text.ToString() + "' , '" + txtBoxCzytelnicyUlica.Text.ToString() + "', '" + txtBoxCzytelnicyEmail.Text.ToString() + "'); ";
+                DialogResult czyDodacCzytelnika = MessageBox.Show("Czy na pewno chcesz dodać czytelnika? ", "Uwaga", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+                if (czyDodacCzytelnika == DialogResult.Yes)
+                {
+                    db_command = new SQLiteCommand(db_querry, db_connect);
+                    db_command.ExecuteNonQuery();
+                    MessageBox.Show("Czytelnik został dodany");
+                }
+            }
+            catch (Exception errorDodajKsiazke)
+            {
+                MessageBox.Show(errorDodajKsiazke.Message);
+            }
+        }
+
+        ///////////////// Button edytuj czytelnika ///////////////////
+        private void btnCzytelnicyEdytujCzytelnika_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (db_connect != null && db_connect.State == ConnectionState.Closed) { db_connect.Open(); }
+                db_querry = "UPDATE Czytelnicy SET imie = '" + txtBoxCzytelnicyImie.Text.ToString() + "', nazwisko = '" + txtBoxCzytelnicyNazwisko.Text.ToString() + "', miasto = '" + txtBoxCzytelnicyMiasto.Text.ToString() + "', ulica = '" + txtBoxCzytelnicyUlica.Text.ToString() + "', email = '" + txtBoxCzytelnicyEmail.Text.ToString() + "' WHERE Czytelnicy.id_czytelnik = '" + dgvCzytelnicyListaWypozyczajacych.SelectedRows[0].Cells["id_czytelnik"].Value.ToString() + "'; ";
+                DialogResult czyEdytowacCzytelnika = MessageBox.Show("Czy na pewno chcesz edytować tego czytelnika? ", "Uwaga", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+                if (czyEdytowacCzytelnika == DialogResult.Yes)
+                {
+                    db_command = new SQLiteCommand(db_querry, db_connect);
+                    db_command.ExecuteNonQuery();
+                    MessageBox.Show("Czytelnik został edytowany");
+                }
+            }
+            catch (Exception ErrorEdytujKsiazke)
+            {
+                MessageBox.Show(ErrorEdytujKsiazke.Message);
+            }
+        }
+
+        ///////////////// Button usuń czytelnika ///////////////////
+        private void btnCzytelnicyUsunCzytelnika_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (db_connect != null && db_connect.State == ConnectionState.Closed) { db_connect.Open(); }
+                db_querry = "DELETE FROM Czytelnicy WHERE id_czytelnik = '" + dgvCzytelnicyListaWypozyczajacych.SelectedRows[0].Cells["id_czytelnik"].Value.ToString() + "'; ";
+                DialogResult czyUsunacCzytelnika = MessageBox.Show("Czy na pewno chcesz usunąć tego czytelnika? ", "Uwaga", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+                if (czyUsunacCzytelnika == DialogResult.Yes)
+                {
+                    db_command = new SQLiteCommand(db_querry, db_connect);
+                    db_command.ExecuteNonQuery();
+                    MessageBox.Show("Czytelnik został usunięty");
+                }
+            }
+            catch (Exception errorEdytujKsiazke)
+            {
+                MessageBox.Show(errorEdytujKsiazke.Message);
+            }
+        }
+
+        ///////////////// Button Szukaj czytelnika ///////////////////
+        private void btnCzytelnicySzukaj_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (db_connect != null && db_connect.State == ConnectionState.Closed) { db_connect.Open(); }
+                db_querry = "SELECT * FROM Czytelnicy WHERE imie || ' ' || nazwisko || ' ' || miasto || ' ' || ulica || ' ' || email LIKE'%" + txtBoxCzytelnicySzukaj.Text +
+                                                        "%' OR imie || ' ' || miasto || ' ' || nazwisko || ' ' || ulica || ' ' || email LIKE'%" + txtBoxCzytelnicySzukaj.Text +
+                                                        "%' OR nazwisko || ' ' || imie || ' ' || miasto || ' ' || ulica || ' ' || email LIKE'%" + txtBoxCzytelnicySzukaj.Text +
+                                                        "%' OR nazwisko || ' ' || miasto || ' ' || imie || ' ' || ulica || ' ' || email LIKE'%" + txtBoxCzytelnicySzukaj.Text +
+                                                        "%' OR ulica || ' ' || miasto || ' ' || imie || ' ' || nazwisko || ' ' || email LIKE'%" + txtBoxCzytelnicySzukaj.Text +
+                                                        "%' OR email || ' ' || miasto || ' ' || imie || ' ' || ulica || ' ' || nazwisko LIKE'%" + txtBoxCzytelnicySzukaj.Text +
+                                                        "%' OR miasto || ' ' || imie || ' ' || nazwisko || ' ' || ulica || ' ' || email LIKE'%" + txtBoxCzytelnicySzukaj.Text +
+                                                        "%' OR miasto || ' ' || nazwisko || ' ' || imie || ' ' || ulica || ' ' || email LIKE'%" + txtBoxCzytelnicySzukaj.Text + "%'";
+                DBdgvCzytelnicyListaWypozyczajacych = new SQLiteDataAdapter(db_querry, db_connect);
+                DSdgvCzytelnicyListaWypozyczajacych.Clear();
+                DBdgvCzytelnicyListaWypozyczajacych.Fill(DSdgvCzytelnicyListaWypozyczajacych);
+                DTdgvCzytelnicyListaWypozyczajacych = DSdgvCzytelnicyListaWypozyczajacych.Tables[0];
+                dgvCzytelnicyListaWypozyczajacych.DataSource = DTdgvCzytelnicyListaWypozyczajacych;
+                dgvCzytelnicyListaWypozyczajacych.Columns["id_czytelnik"].Visible = false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        ///////////////// Data Grid View Lista Wypożyczających z zakładki Czytelnicy ///////////////////
+        private void dgvCzytelnicyListaWypozyczajacych_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            txtBoxCzytelnicyImie.Text = dgvCzytelnicyListaWypozyczajacych.SelectedRows[0].Cells["imie"].Value.ToString();
+            txtBoxCzytelnicyNazwisko.Text = dgvCzytelnicyListaWypozyczajacych.SelectedRows[0].Cells["nazwisko"].Value.ToString();
+            txtBoxCzytelnicyMiasto.Text = dgvCzytelnicyListaWypozyczajacych.SelectedRows[0].Cells["miasto"].Value.ToString();
+            txtBoxCzytelnicyUlica.Text = dgvCzytelnicyListaWypozyczajacych.SelectedRows[0].Cells["ulica"].Value.ToString();
+            txtBoxCzytelnicyEmail.Text = dgvCzytelnicyListaWypozyczajacych.SelectedRows[0].Cells["email"].Value.ToString();
+        }
+
+        ///////////////// Button z funkcją wyczyszczenia textboxów z zakładki Czytelnicy ///////////////////
+        private void btnCzytelnicyWyczysc_Click(object sender, EventArgs e)
+        {
+            txtBoxCzytelnicyImie.Text = null;
+            txtBoxCzytelnicyNazwisko.Text = null;
+            txtBoxCzytelnicyMiasto.Text = null;
+            txtBoxCzytelnicyUlica.Text = null;
+            txtBoxCzytelnicyEmail.Text = null;
+        }
+
+        
     }
 }
     

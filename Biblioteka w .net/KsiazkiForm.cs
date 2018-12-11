@@ -25,6 +25,7 @@ namespace Biblioteka_w_Dotnet
         public SQLiteConnection db_connect = new SQLiteConnection("Data Source = ./DBbiblioteka.db;Version=3;New=False;Compress=True;");         //zmienna przechowująca obiekt bazy danych
         public string db_querry = null;             //zmienna przechowująca zapytanie do bazy danych
         public string db_querry2 = null;
+        public string db_querry3 = null;
         public SQLiteCommand db_command;            //zmienna przechowująca obiekt do wysyłania zapytań
         public SQLiteDataReader db_read;            //zmienna przechowująca odebrane informacje zwrócone dla zapytania doczytującego
 
@@ -46,8 +47,7 @@ namespace Biblioteka_w_Dotnet
         {
             try
             {
-                
-                db_connect.Open();
+                if (db_connect != null && db_connect.State == ConnectionState.Closed) { db_connect.Open(); }
                 String Query = 
                 "SELECT * FROM Ksiazki WHERE kategoria || ' ' || tytul || ' ' || opis || ' ' || autor || ' ' || wydawnictwo || ' ' || rok_wydania LIKE'%" + this.txtBoxSzukaj.Text +
                                         "%' OR kategoria || ' ' || tytul || ' ' || opis || ' ' || autor || ' ' || rok_wydania || ' ' || wydawnictwo LIKE'%" + this.txtBoxSzukaj.Text +
@@ -103,7 +103,12 @@ namespace Biblioteka_w_Dotnet
                         MessageBox.Show(db_querry2);
                         db_command = new SQLiteCommand(db_querry2, db_connect);
                         db_command.ExecuteNonQuery();
-                        
+
+                        db_querry3 = "INSERT INTO HistoriaWypozyczen (id_czytelnik, id_ksiazka, data_wypozyczenia, data_oddania) VALUES " +
+                                       "('" + biblioteka.dgvListaWypozyczajacych.SelectedRows[0].Cells["id_czytelnik"].Value.ToString() + "', '" + dgvKsiazki.SelectedRows[0].Cells["id_ksiazka"].Value + "', '" + lokalnaData.ToString() + "' , '" + dataOddania.ToString() + "'); ";
+                        db_command = new SQLiteCommand(db_querry3, db_connect);
+                        db_command.ExecuteNonQuery();
+
                         MessageBox.Show("Książka została wypożyczona" + lokalnaData + dataOddania + iloscPoWypozyczeniu);
                         
                     }
