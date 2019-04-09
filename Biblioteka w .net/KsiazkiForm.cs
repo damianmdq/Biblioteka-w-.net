@@ -81,12 +81,16 @@ namespace Biblioteka_w_Dotnet
         {
             try
             {
+                string dataWypozyczenia = lokalnaData.ToString("yyyy-MM-dd");
+                string dataZwrotu = dataOddania.ToString("yyyy-MM-dd");
+
                 if (db_connect != null && db_connect.State == ConnectionState.Closed) { db_connect.Open(); }
                 db_querry = "SELECT ilosc_w_bibliotece FROM Ksiazki WHERE id_ksiazka = '" + dgvKsiazki.SelectedRows[0].Cells["id_ksiazka"].Value + "' ;";
                 db_command = new SQLiteCommand(db_querry, db_connect);         
                 db_read = db_command.ExecuteReader();           
                 db_read.Read();                                 
                 string iloscWBibliotece = db_read["ilosc_w_bibliotece"].ToString();
+
                 if ( int.Parse(iloscWBibliotece) > 0)
                 {
                     int iloscPoWypozyczeniu = int.Parse(iloscWBibliotece) - 1; 
@@ -95,7 +99,7 @@ namespace Biblioteka_w_Dotnet
                     {
                         if (db_connect != null && db_connect.State == ConnectionState.Closed) { db_connect.Open(); }
                         db_querry = "INSERT INTO Wypozyczenia (id_czytelnik, id_ksiazka, data_wypozyczenia, data_oddania) VALUES " +
-                                       "('" + biblioteka.dgvListaWypozyczajacych.SelectedRows[0].Cells["id_czytelnik"].Value.ToString() + "', '" + dgvKsiazki.SelectedRows[0].Cells["id_ksiazka"].Value + "', '" + lokalnaData.ToString() + "' , '" + dataOddania.ToString() + "'); ";                       
+                                       "('" + biblioteka.dgvListaWypozyczajacych.SelectedRows[0].Cells["id_czytelnik"].Value.ToString() + "', '" + dgvKsiazki.SelectedRows[0].Cells["id_ksiazka"].Value + "', '" + dataWypozyczenia.ToString() + "' , '" + dataZwrotu.ToString() + "'); ";                       
                         db_command = new SQLiteCommand(db_querry, db_connect);
                         db_command.ExecuteNonQuery();
                         
@@ -105,7 +109,7 @@ namespace Biblioteka_w_Dotnet
                         db_command.ExecuteNonQuery();
 
                         db_querry3 = "INSERT INTO HistoriaWypozyczen (id_czytelnik, id_ksiazka, data_wypozyczenia, data_oddania) VALUES " +
-                                       "('" + biblioteka.dgvListaWypozyczajacych.SelectedRows[0].Cells["id_czytelnik"].Value.ToString() + "', '" + dgvKsiazki.SelectedRows[0].Cells["id_ksiazka"].Value + "', '" + lokalnaData.ToString() + "' , '" + dataOddania.ToString() + "'); ";
+                                       "('" + biblioteka.dgvListaWypozyczajacych.SelectedRows[0].Cells["id_czytelnik"].Value.ToString() + "', '" + dgvKsiazki.SelectedRows[0].Cells["id_ksiazka"].Value + "', '" + dataWypozyczenia.ToString() + "' , '" + dataZwrotu.ToString() + "'); ";
                         db_command = new SQLiteCommand(db_querry3, db_connect);
                         db_command.ExecuteNonQuery();
 

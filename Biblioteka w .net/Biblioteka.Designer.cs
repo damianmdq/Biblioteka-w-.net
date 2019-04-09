@@ -33,6 +33,7 @@
             this.groupBoxKsiazkiWypozyczone = new System.Windows.Forms.GroupBox();
             this.dgvKsiazkiWypozyczone = new System.Windows.Forms.DataGridView();
             this.groupBoxWyszukiwarka = new System.Windows.Forms.GroupBox();
+            this.btnWypozyczeniaZwrot = new System.Windows.Forms.Button();
             this.btnWypozyczeniaWypozyczenie = new System.Windows.Forms.Button();
             this.lblMiejscowosc = new System.Windows.Forms.Label();
             this.lblNazwisko = new System.Windows.Forms.Label();
@@ -50,6 +51,7 @@
             this.tabPageWypozyczenia = new System.Windows.Forms.TabPage();
             this.tabPageKsiazki = new System.Windows.Forms.TabPage();
             this.groupBoxEdytor = new System.Windows.Forms.GroupBox();
+            this.btnWyslijEmaile = new System.Windows.Forms.Button();
             this.btnSzukajKsiazki = new System.Windows.Forms.Button();
             this.txtBoxSzukajKsiazki = new System.Windows.Forms.TextBox();
             this.btnUsunKsiazke = new System.Windows.Forms.Button();
@@ -93,7 +95,7 @@
             this.txtBoxCzytelnicySzukaj = new System.Windows.Forms.TextBox();
             this.groupBoxCzytelnicyWypozyczajacy = new System.Windows.Forms.GroupBox();
             this.dgvCzytelnicyListaWypozyczajacych = new System.Windows.Forms.DataGridView();
-            this.btnWypozyczeniaZwrot = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.groupBoxListaWypozyczajacych.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvListaWypozyczajacych)).BeginInit();
             this.groupBoxKsiazkiWypozyczone.SuspendLayout();
@@ -197,6 +199,15 @@
             this.groupBoxWyszukiwarka.TabIndex = 2;
             this.groupBoxWyszukiwarka.TabStop = false;
             this.groupBoxWyszukiwarka.Text = "Wyszukiwarka";
+            // 
+            // btnWypozyczeniaZwrot
+            // 
+            this.btnWypozyczeniaZwrot.Location = new System.Drawing.Point(481, 196);
+            this.btnWypozyczeniaZwrot.Name = "btnWypozyczeniaZwrot";
+            this.btnWypozyczeniaZwrot.Size = new System.Drawing.Size(180, 38);
+            this.btnWypozyczeniaZwrot.TabIndex = 13;
+            this.btnWypozyczeniaZwrot.Text = "Zwrot";
+            this.btnWypozyczeniaZwrot.Click += new System.EventHandler(this.btnWypozyczeniaZwrot_Click);
             // 
             // btnWypozyczeniaWypozyczenie
             // 
@@ -347,6 +358,7 @@
             // 
             // tabPageWypozyczenia
             // 
+            this.tabPageWypozyczenia.Controls.Add(this.button1);
             this.tabPageWypozyczenia.Controls.Add(this.groupBoxListaWypozyczajacych);
             this.tabPageWypozyczenia.Controls.Add(this.groupBoxKsiazkiWypozyczone);
             this.tabPageWypozyczenia.Controls.Add(this.groupBoxWyszukiwarka);
@@ -372,6 +384,7 @@
             // 
             // groupBoxEdytor
             // 
+            this.groupBoxEdytor.Controls.Add(this.btnWyslijEmaile);
             this.groupBoxEdytor.Controls.Add(this.btnSzukajKsiazki);
             this.groupBoxEdytor.Controls.Add(this.txtBoxSzukajKsiazki);
             this.groupBoxEdytor.Controls.Add(this.btnUsunKsiazke);
@@ -399,6 +412,16 @@
             this.groupBoxEdytor.TabIndex = 1;
             this.groupBoxEdytor.TabStop = false;
             this.groupBoxEdytor.Text = "Edytor";
+            // 
+            // btnWyslijEmaile
+            // 
+            this.btnWyslijEmaile.Location = new System.Drawing.Point(552, 218);
+            this.btnWyslijEmaile.Name = "btnWyslijEmaile";
+            this.btnWyslijEmaile.Size = new System.Drawing.Size(140, 38);
+            this.btnWyslijEmaile.TabIndex = 25;
+            this.btnWyslijEmaile.Text = "Wyślij e-maile";
+            this.btnWyslijEmaile.UseVisualStyleBackColor = true;
+            this.btnWyslijEmaile.Click += new System.EventHandler(this.btnWyslijEmaile_Click);
             // 
             // btnSzukajKsiazki
             // 
@@ -860,14 +883,15 @@
             this.dgvCzytelnicyListaWypozyczajacych.TabIndex = 1;
             this.dgvCzytelnicyListaWypozyczajacych.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCzytelnicyListaWypozyczajacych_CellClick);
             // 
-            // btnWypozyczeniaZwrot
+            // button1
             // 
-            this.btnWypozyczeniaZwrot.Location = new System.Drawing.Point(481, 196);
-            this.btnWypozyczeniaZwrot.Name = "btnWypozyczeniaZwrot";
-            this.btnWypozyczeniaZwrot.Size = new System.Drawing.Size(180, 38);
-            this.btnWypozyczeniaZwrot.TabIndex = 13;
-            this.btnWypozyczeniaZwrot.Text = "Zwrot";
-            this.btnWypozyczeniaZwrot.Click += new System.EventHandler(this.btnWypozyczeniaZwrot_Click);
+            this.button1.Location = new System.Drawing.Point(806, 365);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(95, 41);
+            this.button1.TabIndex = 3;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Biblioteka
             // 
@@ -973,5 +997,7 @@
         private System.Windows.Forms.Label lblCzytelnicyUlica;
         private System.Windows.Forms.Label lblCzytelnicyEmail;
         public System.Windows.Forms.Button btnWypozyczeniaZwrot;
+        private System.Windows.Forms.Button btnWyslijEmaile;
+        private System.Windows.Forms.Button button1;
     }
 }

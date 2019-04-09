@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SQLite;
 using Biblioteka_w_Dotnet;
+using System.Net;
+using System.Net.Mail;
 
 namespace Biblioteka_w_Dotnet
 {
@@ -20,6 +22,12 @@ namespace Biblioteka_w_Dotnet
             InitializeComponent();
         }
 
+        public class Task
+        {
+            public int Id { get; set; }
+          //  public string Name { get; set; }
+          //  public string Key { get; set; }
+        }
         //    Thread th;  // Threading
 
         //Otwieranie nowego formularza Biblioteka
@@ -55,15 +63,18 @@ namespace Biblioteka_w_Dotnet
         private DataTable DTdgvCzytelnicyListaWypozyczajacych = new DataTable();
 
         // Czas z komputera
-        DateTime lokalnaDatata = DateTime.UtcNow.ToLocalTime();
+        DateTime lokalnaData = DateTime.UtcNow.ToLocalTime();
+        DateTime dataWyslaniaMaila = DateTime.UtcNow.ToLocalTime().AddDays(14);
 
 
-        
+
 
         public void btnWypozyczeniaSzukaj_Click(object sender, EventArgs e)
         {
             try
             {
+                string dataWypozyczenia = lokalnaData.ToString("yyyy-MM-dd");
+                MessageBox.Show(dataWypozyczenia);
                 if (db_connect != null && db_connect.State == ConnectionState.Closed) { db_connect.Open(); }
                 db_querry = "SELECT * FROM Czytelnicy WHERE imie || ' ' || nazwisko || ' ' || miasto || ' ' || ulica || ' ' || email LIKE'%" + txtBoxWypozyczeniaSzukaj.Text +
                                                     "%' OR imie || ' ' || miasto || ' ' || nazwisko || ' ' || ulica || ' ' || email LIKE'%" + txtBoxWypozyczeniaSzukaj.Text +
@@ -78,7 +89,7 @@ namespace Biblioteka_w_Dotnet
                 DBListaWypozyczajacych.Fill(DSListaWypozyczajacych);
                 DTListaWypozyczajacych = DSListaWypozyczajacych.Tables[0];
                 dgvListaWypozyczajacych.DataSource = DTListaWypozyczajacych;
-                dgvListaWypozyczajacych.Columns["id_czytelnik"].Visible = false;             
+                dgvListaWypozyczajacych.Columns["id_czytelnik"].Visible = false;
             }
             catch (Exception ex)
             {
@@ -91,7 +102,7 @@ namespace Biblioteka_w_Dotnet
         {
             try
             {
-                
+
                 if (db_connect != null && db_connect.State == ConnectionState.Closed) { db_connect.Open(); }
                 String db_querry = "INSERT INTO Czytelnicy (imie, nazwisko, miasto) VALUES ('" + this.txtBoxImie.Text + "', '" + this.txtBoxNazwisko.Text + "', '" + this.txtBoxMiejscowosc.Text + "') ";
                 SQLiteCommand createCommand = new SQLiteCommand(db_querry, db_connect);
@@ -110,13 +121,13 @@ namespace Biblioteka_w_Dotnet
             try
             {
                 if (db_connect != null && db_connect.State == ConnectionState.Closed) { db_connect.Open(); }
-                String db_querry = "UPDATE Czytelnicy SET imie = '" + this.txtBoxImie.Text + 
+                String db_querry = "UPDATE Czytelnicy SET imie = '" + this.txtBoxImie.Text +
                                 "', nazwisko = '" + this.txtBoxNazwisko.Text +
                                 "', miasto = '" + this.txtBoxMiejscowosc.Text +
                                 "' WHERE id_czytelnik = '" + this.dgvListaWypozyczajacych.SelectedRows[0].Cells["id_czytelnik"].Value.ToString() + "'";
                 SQLiteCommand createCommand = new SQLiteCommand(db_querry, db_connect);
                 createCommand.ExecuteNonQuery();
-                
+
             }
             catch (Exception ex)
             {
@@ -133,12 +144,12 @@ namespace Biblioteka_w_Dotnet
                 String db_querry = "DELETE FROM " +
                     "           Czytelnicy " +
                     "           WHERE Czytelnicy.id_czytelnik = '" +
-                                this.dgvListaWypozyczajacych.SelectedRows[0].Cells["id_czytelnik"].Value.ToString() + 
+                                this.dgvListaWypozyczajacych.SelectedRows[0].Cells["id_czytelnik"].Value.ToString() +
                                 "' AND Wypozyczenia.id_czytelnik = '" +
                                 this.dgvListaWypozyczajacych.SelectedRows[0].Cells["id_czytelnik"].Value.ToString() + "'";
                 SQLiteCommand createCommand = new SQLiteCommand(db_querry, db_connect);
                 createCommand.ExecuteNonQuery();
-                
+
             }
             catch (Exception ex)
             {
@@ -148,44 +159,44 @@ namespace Biblioteka_w_Dotnet
 
         public void dgvListaWypozyczajacych_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-         //   if (dgvListaWypozyczajacych.SelectedRows.Count > 0)
-         //   {
-                txtBoxImie.Text = dgvListaWypozyczajacych.SelectedRows[0].Cells["imie"].Value.ToString();
-                txtBoxNazwisko.Text = dgvListaWypozyczajacych.SelectedRows[0].Cells["nazwisko"].Value.ToString();
-                txtBoxMiejscowosc.Text = dgvListaWypozyczajacych.SelectedRows[0].Cells["miasto"].Value.ToString();
+            //   if (dgvListaWypozyczajacych.SelectedRows.Count > 0)
+            //   {
+            txtBoxImie.Text = dgvListaWypozyczajacych.SelectedRows[0].Cells["imie"].Value.ToString();
+            txtBoxNazwisko.Text = dgvListaWypozyczajacych.SelectedRows[0].Cells["nazwisko"].Value.ToString();
+            txtBoxMiejscowosc.Text = dgvListaWypozyczajacych.SelectedRows[0].Cells["miasto"].Value.ToString();
 
-                try
-                {         
-                    String Query = "SELECT " +
-                        "           Ksiazki.id_ksiazka, Wypozyczenia.id_wypozyczenie, Ksiazki.kategoria, Ksiazki.tytul, Ksiazki.opis, Ksiazki.autor " +
-                        "           FROM " +
-                        "           Ksiazki, Wypozyczenia, Czytelnicy " +
-                        "           WHERE '" + this.dgvListaWypozyczajacych.SelectedRows[0].Cells["id_czytelnik"].Value.ToString() + 
-                                    "' = Czytelnicy.id_czytelnik " +
-                                    "AND " +
-                                    "Czytelnicy.id_czytelnik = Wypozyczenia.id_czytelnik AND Wypozyczenia.id_ksiazka = Ksiazki.id_ksiazka";
-                    SQLiteCommand createCommand = new SQLiteCommand(Query, db_connect);
-                    DBListaWypozyczen = new SQLiteDataAdapter(Query, db_connect);
-                    DSListaWypozyczen.Reset();
-                    DBListaWypozyczen.Fill(DSListaWypozyczen);
-                    DTListaWypozyczen = DSListaWypozyczen.Tables[0];
-                    dgvKsiazkiWypozyczone.DataSource = DTListaWypozyczen;
-                    dgvKsiazkiWypozyczone.Columns["id_ksiazka"].Visible = false;
-                    dgvKsiazkiWypozyczone.Columns["id_wypozyczenie"].Visible = false;
+            try
+            {
+                String Query = "SELECT " +
+                    "           Ksiazki.id_ksiazka, Wypozyczenia.id_wypozyczenie, Ksiazki.kategoria, Ksiazki.tytul, Ksiazki.opis, Ksiazki.autor " +
+                    "           FROM " +
+                    "           Ksiazki, Wypozyczenia, Czytelnicy " +
+                    "           WHERE '" + this.dgvListaWypozyczajacych.SelectedRows[0].Cells["id_czytelnik"].Value.ToString() +
+                                "' = Czytelnicy.id_czytelnik " +
+                                "AND " +
+                                "Czytelnicy.id_czytelnik = Wypozyczenia.id_czytelnik AND Wypozyczenia.id_ksiazka = Ksiazki.id_ksiazka";
+                SQLiteCommand createCommand = new SQLiteCommand(Query, db_connect);
+                DBListaWypozyczen = new SQLiteDataAdapter(Query, db_connect);
+                DSListaWypozyczen.Reset();
+                DBListaWypozyczen.Fill(DSListaWypozyczen);
+                DTListaWypozyczen = DSListaWypozyczen.Tables[0];
+                dgvKsiazkiWypozyczone.DataSource = DTListaWypozyczen;
+                dgvKsiazkiWypozyczone.Columns["id_ksiazka"].Visible = false;
+                dgvKsiazkiWypozyczone.Columns["id_wypozyczenie"].Visible = false;
             }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-        //    }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            //    }
 
         }
-       
 
-        
+
+
         public void dgvKsiazkiWypozyczone_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            
+
         }
 
         ///////////////// Button Wypożyczenie z zakładki Wypożyczenia ///////////////////
@@ -207,16 +218,16 @@ namespace Biblioteka_w_Dotnet
                 db_read = db_command.ExecuteReader();
                 db_read.Read();
                 string iloscWBibliotece = db_read["ilosc_w_bibliotece"].ToString();
-                
-                    int iloscPoZwrocie = int.Parse(iloscWBibliotece) + 1;
-                    if (db_connect != null && db_connect.State == ConnectionState.Closed) { db_connect.Open(); }
-                    db_querry = "UPDATE Ksiazki SET ilosc_w_bibliotece = '" + iloscPoZwrocie + "' WHERE Ksiazki.id_ksiazka = '" + dgvKsiazkiWypozyczone.SelectedRows[0].Cells["id_ksiazka"].Value + "'; ";
-                    db_command = new SQLiteCommand(db_querry, db_connect);
-                    db_command.ExecuteNonQuery();
 
-                    db_querry2 = "DELETE FROM Wypozyczenia WHERE id_wypozyczenie = '" + dgvKsiazkiWypozyczone.SelectedRows[0].Cells["id_wypozyczenie"].Value.ToString() + "'; ";
-                    db_command = new SQLiteCommand(db_querry2, db_connect);
-                    db_command.ExecuteNonQuery();      
+                int iloscPoZwrocie = int.Parse(iloscWBibliotece) + 1;
+                if (db_connect != null && db_connect.State == ConnectionState.Closed) { db_connect.Open(); }
+                db_querry = "UPDATE Ksiazki SET ilosc_w_bibliotece = '" + iloscPoZwrocie + "' WHERE Ksiazki.id_ksiazka = '" + dgvKsiazkiWypozyczone.SelectedRows[0].Cells["id_ksiazka"].Value + "'; ";
+                db_command = new SQLiteCommand(db_querry, db_connect);
+                db_command.ExecuteNonQuery();
+
+                db_querry2 = "DELETE FROM Wypozyczenia WHERE id_wypozyczenie = '" + dgvKsiazkiWypozyczone.SelectedRows[0].Cells["id_wypozyczenie"].Value.ToString() + "'; ";
+                db_command = new SQLiteCommand(db_querry2, db_connect);
+                db_command.ExecuteNonQuery();
             }
             catch (Exception errorZwrot)
             {
@@ -475,8 +486,89 @@ namespace Biblioteka_w_Dotnet
             txtBoxCzytelnicyEmail.Text = null;
         }
 
-        
-    }
+        private void btnWyslijEmaile_Click(object sender, EventArgs e)
+        {
+       
+
+        string data_wyslania_maila = dataWyslaniaMaila.ToString("yyyy-MM-dd");
+            try
+            {
+                if (db_connect != null && db_connect.State == ConnectionState.Closed) { db_connect.Open(); }
+                db_querry = "SELECT id_czytelnik FROM Wypozyczenia WHERE data_oddania = '" + data_wyslania_maila.ToString() + "' ;";
+                db_command = new SQLiteCommand(db_querry, db_connect);
+                db_read = db_command.ExecuteReader();
+
+
+                var idCzytelnikow = new List<Int32>();
+
+                while (db_read.Read())
+                {
+                    idCzytelnikow.Add(db_read.GetInt32(0));
+                    MessageBox.Show(idCzytelnikow.ToString());
+                }
+                
+                
+
+
+                
+
+
+
+
+                //      string [] idCzytelnika = new string [2];
+                //       idCzytelnika[] = db_read["id_czytelnik"].ToString();
+                //  string idCzytelnika = db_read["id_czytelnik"].ToString();
+                /*   MessageBox.Show(idCzytelnika.ToString());
+                   MessageBox.Show(data_wyslania_maila.ToString());
+
+                   if (idCzytelnika != null)
+                   { 
+                       db_querry = "SELECT imie, nazwisko, email FROM Czytelnicy WHERE id_czytelnik = '" + idCzytelnika.ToString() + "' ;";
+                       db_command = new SQLiteCommand(db_querry, db_connect);
+                       db_read = db_command.ExecuteReader();
+                       db_read.Read();
+                       string imie = db_read["imie"].ToString();
+                       string nazwisko = db_read["nazwisko"].ToString();
+                       string email = db_read["email"].ToString();
+                       MessageBox.Show(imie + nazwisko + email);
+
+                       string tresc = imie.ToString() + " " + nazwisko.ToString() + " za 14 dni kończy się Ci okres wypożyczenia";
+                       Biblioteka_w.net.lib.MailSender MailSender = new Biblioteka_w.net.lib.MailSender();
+                       MailSender.mailSender(email.ToString(), "Powiadomienie o wypożyczeniu", tresc);
+                       MessageBox.Show("Maile zostały wysłane");
+                   }*/
+            }                         
+            catch (Exception errorWyslijEmaile)
+            {
+                MessageBox.Show(errorWyslijEmaile.Message);
+            }
+            /*
+
+                        try
+                        {
+                            if (db_connect != null && db_connect.State == ConnectionState.Closed) { db_connect.Open(); }
+                            db_querry = "SELECT data_oddania FROM Wypozyczenia";
+                            DialogResult czyWyslacPowiadomienia = MessageBox.Show("Czy na pewno chcesz wysłać powiadomienia do czytelnikó? ", "Uwaga", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+                            if (czyWyslacPowiadomienia == DialogResult.Yes)
+                            {
+                                db_command = new SQLiteCommand(db_querry, db_connect);
+                                db_command.ExecuteNonQuery();
+                            }
+
+                        }
+                        catch (Exception errorWyslijEmaile)
+                        {
+                            MessageBox.Show(errorWyslijEmaile.Message);
+                        }
+            */
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+           
+        }
+        }
+    
 }
     
 // dodana linijka
