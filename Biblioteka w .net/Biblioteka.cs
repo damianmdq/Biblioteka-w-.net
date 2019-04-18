@@ -28,6 +28,11 @@ namespace Biblioteka_w_Dotnet
           //  public string Name { get; set; }
           //  public string Key { get; set; }
         }
+        public class MojeDane
+        {
+            public int idCzytelnika;
+            public int idKsiazki;
+        }
         //    Thread th;  // Threading
 
         //Otwieranie nowego formularza Biblioteka
@@ -489,31 +494,53 @@ namespace Biblioteka_w_Dotnet
         private void btnWyslijEmaile_Click(object sender, EventArgs e)
         {
        
-
+            
         string data_wyslania_maila = dataWyslaniaMaila.ToString("yyyy-MM-dd");
-            try
-            {
+        //    try
+        //    {
                 if (db_connect != null && db_connect.State == ConnectionState.Closed) { db_connect.Open(); }
-                db_querry = "SELECT id_czytelnik FROM Wypozyczenia WHERE data_oddania = '" + data_wyslania_maila.ToString() + "' ;";
+                db_querry = "SELECT id_czytelnik, id_ksiazka FROM Wypozyczenia WHERE data_oddania = '" + data_wyslania_maila.ToString() + "' ;";
                 db_command = new SQLiteCommand(db_querry, db_connect);
                 db_read = db_command.ExecuteReader();
 
-
-                var idCzytelnikow = new List<Int32>();
+              //  List <MojeDane> ListaDanych = new List<MojeDane>();
+                List<Int32> idCzytelnikow = new List<Int32>();
+                List<Int32> idKsiazek = new List<Int32>();
 
                 while (db_read.Read())
                 {
+                    // ListaDanych.Add(new MojeDane { idCzytelnika = db_read.GetInt32(0), idKsiazki = db_read.GetInt32(1)});
                     idCzytelnikow.Add(db_read.GetInt32(0));
-                    MessageBox.Show(idCzytelnikow.ToString());
+                    idKsiazek.Add(db_read.GetInt32(1));
                 }
+            int licznik = idCzytelnikow.Count;
+                MessageBox.Show(idCzytelnikow.Count.ToString());
+            MessageBox.Show(idCzytelnikow[1].ToString());
+                for (int i = 0; i > licznik; i++)
+                {
+                    if (db_connect != null && db_connect.State == ConnectionState.Closed) { db_connect.Open(); }
+                    db_querry = "SELECT imie, nazwisko, email FROM Czytelnicy WHERE id_czytelnik = '" + idCzytelnikow[i].ToString() + "' ;";
+                    db_command = new SQLiteCommand(db_querry, db_connect);
+                    db_read = db_command.ExecuteReader();
+                    db_read.Read();
+                    string imie = db_read["imie"].ToString();
+                    string nazwisko = db_read["nazwisko"].ToString();
+                    string email = db_read["email"].ToString();
+
+                    if (db_connect != null && db_connect.State == ConnectionState.Closed) { db_connect.Open(); }
+                    db_querry = "SELECT tytul, autor FROM Ksiazki WHERE id_ksiazka = '" + idKsiazek[i].ToString() + "' ;";
+                    db_command = new SQLiteCommand(db_querry, db_connect);
+                    db_read = db_command.ExecuteReader();
+                    db_read.Read();
+                    string tytul = db_read["tytul"].ToString();
+                    string autor = db_read["autor"].ToString();
+
+                    string tresc = imie.ToString() + " " + nazwisko.ToString() + " za 14 dni kończy się Ci okres wypożyczenia książki: Tytuł: " + tytul.ToString() + " Autor: " + autor.ToString();
+                    Biblioteka_w.net.lib.MailSender MailSender = new Biblioteka_w.net.lib.MailSender();
+                    MailSender.mailSender(email.ToString(), "Powiadomienie o wypożyczeniu książek", tresc);
+          //      }
                 
                 
-
-
-                
-
-
-
 
                 //      string [] idCzytelnika = new string [2];
                 //       idCzytelnika[] = db_read["id_czytelnik"].ToString();
@@ -538,10 +565,10 @@ namespace Biblioteka_w_Dotnet
                        MessageBox.Show("Maile zostały wysłane");
                    }*/
             }                         
-            catch (Exception errorWyslijEmaile)
-            {
-                MessageBox.Show(errorWyslijEmaile.Message);
-            }
+     //       catch (Exception errorWyslijEmaile)
+     //       {
+     //           MessageBox.Show(errorWyslijEmaile.Message);
+     //       }
             /*
 
                         try
