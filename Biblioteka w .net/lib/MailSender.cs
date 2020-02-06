@@ -55,7 +55,7 @@ namespace Biblioteka_w.net.lib
                 client.AuthenticationMechanisms.Remove("XOAUTH2");
 
                 // Note: only needed if the SMTP server requires authentication
-                client.Authenticate("biblioteka.testowy@gmail.com", "Damian123");
+                client.Authenticate("biblioteka.testowy@gmail.com", "jakies haslo");
 
                 client.Send(message);
                 client.Disconnect(true);
