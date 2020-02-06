@@ -63,9 +63,9 @@ namespace Biblioteka_w_Dotnet
                     th.Start();
                 }
                 if(count > 1)
-                    MessageBox.Show("Duplicate username or password");
+                    MessageBox.Show("Nazwa użytkownika lub hasło są niepoprawne");
                 if (count < 1)
-                    MessageBox.Show("Username or password is not correct");
+                    MessageBox.Show("Nazwa użytkownika lub hasło są niepoprawne");
             }
             catch(Exception ex)
             {

@@ -37,11 +37,8 @@
             this.btnWypozyczeniaWypozyczenie = new System.Windows.Forms.Button();
             this.lblMiejscowosc = new System.Windows.Forms.Label();
             this.lblNazwisko = new System.Windows.Forms.Label();
-            this.btnEdytujOsobe = new System.Windows.Forms.Button();
-            this.btnUsunOsobe = new System.Windows.Forms.Button();
             this.btnWyczysc = new System.Windows.Forms.Button();
             this.lblImie = new System.Windows.Forms.Label();
-            this.btnDodajOsobe = new System.Windows.Forms.Button();
             this.btnWypozyczeniaSzukaj = new System.Windows.Forms.Button();
             this.txtBoxMiejscowosc = new System.Windows.Forms.TextBox();
             this.txtBoxNazwisko = new System.Windows.Forms.TextBox();
@@ -95,7 +92,20 @@
             this.txtBoxCzytelnicySzukaj = new System.Windows.Forms.TextBox();
             this.groupBoxCzytelnicyWypozyczajacy = new System.Windows.Forms.GroupBox();
             this.dgvCzytelnicyListaWypozyczajacych = new System.Windows.Forms.DataGridView();
-            this.button1 = new System.Windows.Forms.Button();
+            this.tabPageStatystyki = new System.Windows.Forms.TabPage();
+            this.tabControlStatKsiazki = new System.Windows.Forms.TabControl();
+            this.tabPageStatKsiazki = new System.Windows.Forms.TabPage();
+            this.txtBoxStatSzukajKsiazki = new System.Windows.Forms.TextBox();
+            this.btnStatSzukajKsiazki = new System.Windows.Forms.Button();
+            this.dgvStatKsiazki = new System.Windows.Forms.DataGridView();
+            this.tabPageStatGatunek = new System.Windows.Forms.TabPage();
+            this.btnStatSzukajGatunek = new System.Windows.Forms.Button();
+            this.txtBoxStatSzukajGatunek = new System.Windows.Forms.TextBox();
+            this.dgvStatGatunek = new System.Windows.Forms.DataGridView();
+            this.tabPageStatCzytelnicy = new System.Windows.Forms.TabPage();
+            this.txtBoxStatCzytelnicy = new System.Windows.Forms.TextBox();
+            this.btnStatSzukajCzytelnicy = new System.Windows.Forms.Button();
+            this.dgvStatCzytelnicy = new System.Windows.Forms.DataGridView();
             this.groupBoxListaWypozyczajacych.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvListaWypozyczajacych)).BeginInit();
             this.groupBoxKsiazkiWypozyczone.SuspendLayout();
@@ -111,6 +121,14 @@
             this.groupBoxCzytelnicyEdytor.SuspendLayout();
             this.groupBoxCzytelnicyWypozyczajacy.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCzytelnicyListaWypozyczajacych)).BeginInit();
+            this.tabPageStatystyki.SuspendLayout();
+            this.tabControlStatKsiazki.SuspendLayout();
+            this.tabPageStatKsiazki.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvStatKsiazki)).BeginInit();
+            this.tabPageStatGatunek.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvStatGatunek)).BeginInit();
+            this.tabPageStatCzytelnicy.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvStatCzytelnicy)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBoxListaWypozyczajacych
@@ -132,11 +150,12 @@
             // 
             this.dgvListaWypozyczajacych.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvListaWypozyczajacych.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.dgvListaWypozyczajacych.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvListaWypozyczajacych.ColumnHeadersHeight = 18;
             this.dgvListaWypozyczajacych.Location = new System.Drawing.Point(4, 26);
             this.dgvListaWypozyczajacych.Margin = new System.Windows.Forms.Padding(2);
             this.dgvListaWypozyczajacych.MultiSelect = false;
             this.dgvListaWypozyczajacych.Name = "dgvListaWypozyczajacych";
+            this.dgvListaWypozyczajacych.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.dgvListaWypozyczajacych.RowTemplate.Height = 24;
             this.dgvListaWypozyczajacych.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvListaWypozyczajacych.Size = new System.Drawing.Size(508, 226);
@@ -180,11 +199,8 @@
             this.groupBoxWyszukiwarka.Controls.Add(this.btnWypozyczeniaWypozyczenie);
             this.groupBoxWyszukiwarka.Controls.Add(this.lblMiejscowosc);
             this.groupBoxWyszukiwarka.Controls.Add(this.lblNazwisko);
-            this.groupBoxWyszukiwarka.Controls.Add(this.btnEdytujOsobe);
-            this.groupBoxWyszukiwarka.Controls.Add(this.btnUsunOsobe);
             this.groupBoxWyszukiwarka.Controls.Add(this.btnWyczysc);
             this.groupBoxWyszukiwarka.Controls.Add(this.lblImie);
-            this.groupBoxWyszukiwarka.Controls.Add(this.btnDodajOsobe);
             this.groupBoxWyszukiwarka.Controls.Add(this.btnWypozyczeniaSzukaj);
             this.groupBoxWyszukiwarka.Controls.Add(this.txtBoxMiejscowosc);
             this.groupBoxWyszukiwarka.Controls.Add(this.txtBoxNazwisko);
@@ -195,7 +211,7 @@
             this.groupBoxWyszukiwarka.Margin = new System.Windows.Forms.Padding(2);
             this.groupBoxWyszukiwarka.Name = "groupBoxWyszukiwarka";
             this.groupBoxWyszukiwarka.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBoxWyszukiwarka.Size = new System.Drawing.Size(666, 263);
+            this.groupBoxWyszukiwarka.Size = new System.Drawing.Size(666, 261);
             this.groupBoxWyszukiwarka.TabIndex = 2;
             this.groupBoxWyszukiwarka.TabStop = false;
             this.groupBoxWyszukiwarka.Text = "Wyszukiwarka";
@@ -240,26 +256,6 @@
             this.lblNazwisko.TabIndex = 11;
             this.lblNazwisko.Text = "Nazwisko";
             // 
-            // btnEdytujOsobe
-            // 
-            this.btnEdytujOsobe.Location = new System.Drawing.Point(162, 196);
-            this.btnEdytujOsobe.Margin = new System.Windows.Forms.Padding(2);
-            this.btnEdytujOsobe.Name = "btnEdytujOsobe";
-            this.btnEdytujOsobe.Size = new System.Drawing.Size(150, 41);
-            this.btnEdytujOsobe.TabIndex = 7;
-            this.btnEdytujOsobe.Text = "Edytuj osobę";
-            this.btnEdytujOsobe.UseVisualStyleBackColor = true;
-            // 
-            // btnUsunOsobe
-            // 
-            this.btnUsunOsobe.Location = new System.Drawing.Point(316, 196);
-            this.btnUsunOsobe.Margin = new System.Windows.Forms.Padding(2);
-            this.btnUsunOsobe.Name = "btnUsunOsobe";
-            this.btnUsunOsobe.Size = new System.Drawing.Size(150, 41);
-            this.btnUsunOsobe.TabIndex = 8;
-            this.btnUsunOsobe.Text = "Usuń osobę";
-            this.btnUsunOsobe.UseVisualStyleBackColor = true;
-            // 
             // btnWyczysc
             // 
             this.btnWyczysc.Location = new System.Drawing.Point(481, 78);
@@ -280,16 +276,6 @@
             this.lblImie.Size = new System.Drawing.Size(45, 24);
             this.lblImie.TabIndex = 10;
             this.lblImie.Text = "Imię";
-            // 
-            // btnDodajOsobe
-            // 
-            this.btnDodajOsobe.Location = new System.Drawing.Point(8, 196);
-            this.btnDodajOsobe.Margin = new System.Windows.Forms.Padding(2);
-            this.btnDodajOsobe.Name = "btnDodajOsobe";
-            this.btnDodajOsobe.Size = new System.Drawing.Size(150, 41);
-            this.btnDodajOsobe.TabIndex = 6;
-            this.btnDodajOsobe.Text = "Dodaj osobę";
-            this.btnDodajOsobe.UseVisualStyleBackColor = true;
             // 
             // btnWypozyczeniaSzukaj
             // 
@@ -347,6 +333,7 @@
             this.tabControlBiblioteka.Controls.Add(this.tabPageWypozyczenia);
             this.tabControlBiblioteka.Controls.Add(this.tabPageKsiazki);
             this.tabControlBiblioteka.Controls.Add(this.tabPageUzytkownicy);
+            this.tabControlBiblioteka.Controls.Add(this.tabPageStatystyki);
             this.tabControlBiblioteka.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.tabControlBiblioteka.HotTrack = true;
             this.tabControlBiblioteka.Location = new System.Drawing.Point(-3, -2);
@@ -358,7 +345,6 @@
             // 
             // tabPageWypozyczenia
             // 
-            this.tabPageWypozyczenia.Controls.Add(this.button1);
             this.tabPageWypozyczenia.Controls.Add(this.groupBoxListaWypozyczajacych);
             this.tabPageWypozyczenia.Controls.Add(this.groupBoxKsiazkiWypozyczone);
             this.tabPageWypozyczenia.Controls.Add(this.groupBoxWyszukiwarka);
@@ -883,15 +869,143 @@
             this.dgvCzytelnicyListaWypozyczajacych.TabIndex = 1;
             this.dgvCzytelnicyListaWypozyczajacych.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCzytelnicyListaWypozyczajacych_CellClick);
             // 
-            // button1
+            // tabPageStatystyki
             // 
-            this.button1.Location = new System.Drawing.Point(806, 365);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(95, 41);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.tabPageStatystyki.Controls.Add(this.tabControlStatKsiazki);
+            this.tabPageStatystyki.Location = new System.Drawing.Point(4, 4);
+            this.tabPageStatystyki.Name = "tabPageStatystyki";
+            this.tabPageStatystyki.Size = new System.Drawing.Size(1032, 558);
+            this.tabPageStatystyki.TabIndex = 3;
+            this.tabPageStatystyki.Text = "Statystyki";
+            this.tabPageStatystyki.UseVisualStyleBackColor = true;
+            // 
+            // tabControlStatKsiazki
+            // 
+            this.tabControlStatKsiazki.Alignment = System.Windows.Forms.TabAlignment.Bottom;
+            this.tabControlStatKsiazki.Controls.Add(this.tabPageStatKsiazki);
+            this.tabControlStatKsiazki.Controls.Add(this.tabPageStatGatunek);
+            this.tabControlStatKsiazki.Controls.Add(this.tabPageStatCzytelnicy);
+            this.tabControlStatKsiazki.Location = new System.Drawing.Point(0, 0);
+            this.tabControlStatKsiazki.Name = "tabControlStatKsiazki";
+            this.tabControlStatKsiazki.SelectedIndex = 0;
+            this.tabControlStatKsiazki.Size = new System.Drawing.Size(1036, 558);
+            this.tabControlStatKsiazki.TabIndex = 0;
+            // 
+            // tabPageStatKsiazki
+            // 
+            this.tabPageStatKsiazki.Controls.Add(this.txtBoxStatSzukajKsiazki);
+            this.tabPageStatKsiazki.Controls.Add(this.btnStatSzukajKsiazki);
+            this.tabPageStatKsiazki.Controls.Add(this.dgvStatKsiazki);
+            this.tabPageStatKsiazki.Location = new System.Drawing.Point(4, 4);
+            this.tabPageStatKsiazki.Name = "tabPageStatKsiazki";
+            this.tabPageStatKsiazki.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageStatKsiazki.Size = new System.Drawing.Size(1028, 521);
+            this.tabPageStatKsiazki.TabIndex = 0;
+            this.tabPageStatKsiazki.Text = "Książek";
+            this.tabPageStatKsiazki.UseVisualStyleBackColor = true;
+            // 
+            // txtBoxStatSzukajKsiazki
+            // 
+            this.txtBoxStatSzukajKsiazki.Location = new System.Drawing.Point(17, 426);
+            this.txtBoxStatSzukajKsiazki.Name = "txtBoxStatSzukajKsiazki";
+            this.txtBoxStatSzukajKsiazki.Size = new System.Drawing.Size(816, 29);
+            this.txtBoxStatSzukajKsiazki.TabIndex = 6;
+            // 
+            // btnStatSzukajKsiazki
+            // 
+            this.btnStatSzukajKsiazki.Location = new System.Drawing.Point(851, 418);
+            this.btnStatSzukajKsiazki.Name = "btnStatSzukajKsiazki";
+            this.btnStatSzukajKsiazki.Size = new System.Drawing.Size(137, 47);
+            this.btnStatSzukajKsiazki.TabIndex = 5;
+            this.btnStatSzukajKsiazki.Text = "Szukaj";
+            this.btnStatSzukajKsiazki.UseVisualStyleBackColor = true;
+            this.btnStatSzukajKsiazki.Click += new System.EventHandler(this.btnStatSzukajKsiazki_Click);
+            // 
+            // dgvStatKsiazki
+            // 
+            this.dgvStatKsiazki.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvStatKsiazki.Location = new System.Drawing.Point(17, 21);
+            this.dgvStatKsiazki.Name = "dgvStatKsiazki";
+            this.dgvStatKsiazki.Size = new System.Drawing.Size(995, 345);
+            this.dgvStatKsiazki.TabIndex = 0;
+            this.dgvStatKsiazki.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvStatKsiazki_CellClick);
+            this.dgvStatKsiazki.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvStatKsiazki_CellContentClick);
+            // 
+            // tabPageStatGatunek
+            // 
+            this.tabPageStatGatunek.Controls.Add(this.btnStatSzukajGatunek);
+            this.tabPageStatGatunek.Controls.Add(this.txtBoxStatSzukajGatunek);
+            this.tabPageStatGatunek.Controls.Add(this.dgvStatGatunek);
+            this.tabPageStatGatunek.Location = new System.Drawing.Point(4, 4);
+            this.tabPageStatGatunek.Name = "tabPageStatGatunek";
+            this.tabPageStatGatunek.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageStatGatunek.Size = new System.Drawing.Size(1028, 521);
+            this.tabPageStatGatunek.TabIndex = 1;
+            this.tabPageStatGatunek.Text = "Gatunków";
+            this.tabPageStatGatunek.UseVisualStyleBackColor = true;
+            // 
+            // btnStatSzukajGatunek
+            // 
+            this.btnStatSzukajGatunek.Location = new System.Drawing.Point(861, 390);
+            this.btnStatSzukajGatunek.Name = "btnStatSzukajGatunek";
+            this.btnStatSzukajGatunek.Size = new System.Drawing.Size(124, 45);
+            this.btnStatSzukajGatunek.TabIndex = 2;
+            this.btnStatSzukajGatunek.Text = "Szukaj";
+            this.btnStatSzukajGatunek.UseVisualStyleBackColor = true;
+            this.btnStatSzukajGatunek.Click += new System.EventHandler(this.btnStatSzukajGatunek_Click);
+            // 
+            // txtBoxStatSzukajGatunek
+            // 
+            this.txtBoxStatSzukajGatunek.Location = new System.Drawing.Point(7, 397);
+            this.txtBoxStatSzukajGatunek.Name = "txtBoxStatSzukajGatunek";
+            this.txtBoxStatSzukajGatunek.Size = new System.Drawing.Size(834, 29);
+            this.txtBoxStatSzukajGatunek.TabIndex = 1;
+            // 
+            // dgvStatGatunek
+            // 
+            this.dgvStatGatunek.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvStatGatunek.Location = new System.Drawing.Point(7, 6);
+            this.dgvStatGatunek.Name = "dgvStatGatunek";
+            this.dgvStatGatunek.Size = new System.Drawing.Size(1005, 332);
+            this.dgvStatGatunek.TabIndex = 0;
+            this.dgvStatGatunek.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvStatGatunek_CellClick);
+            // 
+            // tabPageStatCzytelnicy
+            // 
+            this.tabPageStatCzytelnicy.Controls.Add(this.txtBoxStatCzytelnicy);
+            this.tabPageStatCzytelnicy.Controls.Add(this.btnStatSzukajCzytelnicy);
+            this.tabPageStatCzytelnicy.Controls.Add(this.dgvStatCzytelnicy);
+            this.tabPageStatCzytelnicy.Location = new System.Drawing.Point(4, 4);
+            this.tabPageStatCzytelnicy.Name = "tabPageStatCzytelnicy";
+            this.tabPageStatCzytelnicy.Size = new System.Drawing.Size(1028, 521);
+            this.tabPageStatCzytelnicy.TabIndex = 2;
+            this.tabPageStatCzytelnicy.Text = "Czytelników";
+            this.tabPageStatCzytelnicy.UseVisualStyleBackColor = true;
+            // 
+            // txtBoxStatCzytelnicy
+            // 
+            this.txtBoxStatCzytelnicy.Location = new System.Drawing.Point(8, 390);
+            this.txtBoxStatCzytelnicy.Name = "txtBoxStatCzytelnicy";
+            this.txtBoxStatCzytelnicy.Size = new System.Drawing.Size(796, 29);
+            this.txtBoxStatCzytelnicy.TabIndex = 2;
+            // 
+            // btnStatSzukajCzytelnicy
+            // 
+            this.btnStatSzukajCzytelnicy.Location = new System.Drawing.Point(824, 380);
+            this.btnStatSzukajCzytelnicy.Name = "btnStatSzukajCzytelnicy";
+            this.btnStatSzukajCzytelnicy.Size = new System.Drawing.Size(132, 51);
+            this.btnStatSzukajCzytelnicy.TabIndex = 1;
+            this.btnStatSzukajCzytelnicy.Text = "Szukaj";
+            this.btnStatSzukajCzytelnicy.UseVisualStyleBackColor = true;
+            this.btnStatSzukajCzytelnicy.Click += new System.EventHandler(this.btnStatSzukajCzytelnicy_Click);
+            // 
+            // dgvStatCzytelnicy
+            // 
+            this.dgvStatCzytelnicy.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvStatCzytelnicy.Location = new System.Drawing.Point(8, 7);
+            this.dgvStatCzytelnicy.Name = "dgvStatCzytelnicy";
+            this.dgvStatCzytelnicy.Size = new System.Drawing.Size(1017, 325);
+            this.dgvStatCzytelnicy.TabIndex = 0;
             // 
             // Biblioteka
             // 
@@ -925,6 +1039,17 @@
             this.groupBoxCzytelnicyEdytor.PerformLayout();
             this.groupBoxCzytelnicyWypozyczajacy.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvCzytelnicyListaWypozyczajacych)).EndInit();
+            this.tabPageStatystyki.ResumeLayout(false);
+            this.tabControlStatKsiazki.ResumeLayout(false);
+            this.tabPageStatKsiazki.ResumeLayout(false);
+            this.tabPageStatKsiazki.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvStatKsiazki)).EndInit();
+            this.tabPageStatGatunek.ResumeLayout(false);
+            this.tabPageStatGatunek.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvStatGatunek)).EndInit();
+            this.tabPageStatCzytelnicy.ResumeLayout(false);
+            this.tabPageStatCzytelnicy.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvStatCzytelnicy)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -937,17 +1062,8 @@
         private System.Windows.Forms.DataGridView dgvKsiazkiWypozyczone;
         private System.Windows.Forms.GroupBox groupBoxWyszukiwarka;
         public System.Windows.Forms.Button btnWypozyczeniaWypozyczenie;
-        private System.Windows.Forms.Label lblMiejscowosc;
-        private System.Windows.Forms.Label lblNazwisko;
-        private System.Windows.Forms.Label lblImie;
-        private System.Windows.Forms.Button btnUsunOsobe;
-        private System.Windows.Forms.Button btnEdytujOsobe;
-        private System.Windows.Forms.Button btnDodajOsobe;
         private System.Windows.Forms.Button btnWyczysc;
         private System.Windows.Forms.Button btnWypozyczeniaSzukaj;
-        private System.Windows.Forms.TextBox txtBoxMiejscowosc;
-        private System.Windows.Forms.TextBox txtBoxNazwisko;
-        private System.Windows.Forms.TextBox txtBoxImie;
         private System.Windows.Forms.TextBox txtBoxWypozyczeniaSzukaj;
         private System.Windows.Forms.TabControl tabControlBiblioteka;
         private System.Windows.Forms.TabPage tabPageWypozyczenia;
@@ -998,6 +1114,25 @@
         private System.Windows.Forms.Label lblCzytelnicyEmail;
         public System.Windows.Forms.Button btnWypozyczeniaZwrot;
         private System.Windows.Forms.Button btnWyslijEmaile;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TabPage tabPageStatystyki;
+        private System.Windows.Forms.TabControl tabControlStatKsiazki;
+        private System.Windows.Forms.TabPage tabPageStatKsiazki;
+        private System.Windows.Forms.DataGridView dgvStatKsiazki;
+        private System.Windows.Forms.TabPage tabPageStatGatunek;
+        private System.Windows.Forms.TabPage tabPageStatCzytelnicy;
+        private System.Windows.Forms.Button btnStatSzukajKsiazki;
+        private System.Windows.Forms.TextBox txtBoxStatSzukajKsiazki;
+        private System.Windows.Forms.DataGridView dgvStatGatunek;
+        private System.Windows.Forms.Button btnStatSzukajGatunek;
+        private System.Windows.Forms.TextBox txtBoxStatSzukajGatunek;
+        private System.Windows.Forms.TextBox txtBoxStatCzytelnicy;
+        private System.Windows.Forms.Button btnStatSzukajCzytelnicy;
+        private System.Windows.Forms.DataGridView dgvStatCzytelnicy;
+        private System.Windows.Forms.Label lblMiejscowosc;
+        private System.Windows.Forms.Label lblNazwisko;
+        private System.Windows.Forms.Label lblImie;
+        private System.Windows.Forms.TextBox txtBoxMiejscowosc;
+        private System.Windows.Forms.TextBox txtBoxNazwisko;
+        private System.Windows.Forms.TextBox txtBoxImie;
     }
 }

@@ -85,11 +85,12 @@ namespace Biblioteka_w_Dotnet
                 string dataZwrotu = dataOddania.ToString("yyyy-MM-dd");
 
                 if (db_connect != null && db_connect.State == ConnectionState.Closed) { db_connect.Open(); }
-                db_querry = "SELECT ilosc_w_bibliotece FROM Ksiazki WHERE id_ksiazka = '" + dgvKsiazki.SelectedRows[0].Cells["id_ksiazka"].Value + "' ;";
+                db_querry = "SELECT ilosc_w_bibliotece, kategoria FROM Ksiazki WHERE id_ksiazka = '" + dgvKsiazki.SelectedRows[0].Cells["id_ksiazka"].Value + "' ;";
                 db_command = new SQLiteCommand(db_querry, db_connect);         
                 db_read = db_command.ExecuteReader();           
                 db_read.Read();                                 
                 string iloscWBibliotece = db_read["ilosc_w_bibliotece"].ToString();
+                string kategoria = db_read["kategoria"].ToString();
 
                 if ( int.Parse(iloscWBibliotece) > 0)
                 {
@@ -108,12 +109,12 @@ namespace Biblioteka_w_Dotnet
                         db_command = new SQLiteCommand(db_querry2, db_connect);
                         db_command.ExecuteNonQuery();
 
-                        db_querry3 = "INSERT INTO HistoriaWypozyczen (id_czytelnik, id_ksiazka, data_wypozyczenia, data_oddania) VALUES " +
-                                       "('" + biblioteka.dgvListaWypozyczajacych.SelectedRows[0].Cells["id_czytelnik"].Value.ToString() + "', '" + dgvKsiazki.SelectedRows[0].Cells["id_ksiazka"].Value + "', '" + dataWypozyczenia.ToString() + "' , '" + dataZwrotu.ToString() + "'); ";
+                        db_querry3 = "INSERT INTO HistoriaWypozyczen (id_czytelnik, id_ksiazka, data_wypozyczenia, data_oddania, kategoria) VALUES " +
+                                       "('" + biblioteka.dgvListaWypozyczajacych.SelectedRows[0].Cells["id_czytelnik"].Value.ToString() + "', '" + dgvKsiazki.SelectedRows[0].Cells["id_ksiazka"].Value + "', '" + dataWypozyczenia.ToString() + "' , '" + dataZwrotu.ToString() + "', '" + kategoria.ToString() + "'); ";
                         db_command = new SQLiteCommand(db_querry3, db_connect);
                         db_command.ExecuteNonQuery();
 
-                        MessageBox.Show("Książka została wypożyczona" + lokalnaData + dataOddania + iloscPoWypozyczeniu);
+                        MessageBox.Show("Książka została wypożyczona");
                         
                     }
                     catch (Exception ex)
@@ -131,22 +132,7 @@ namespace Biblioteka_w_Dotnet
                 MessageBox.Show(ex.Message);
             }
 
-     /*      
-                    
-                try
-                {
-                    String Query = "INSERT INTO Wypozyczenia (id_czytelnik, id_ksiazka, data_wypozyczenia, data_oddania, stan_faktyczny) VALUES " +
-                                   "('" + biblioteka.dgvListaWypozyczajacych.SelectedRows[0].Cells["id_czytelnik"].Value.ToString() + "', '" + dgvKsiazki.SelectedRows[0].Cells["id_ksiazka"].Value + "', '" + dataWypozyczenia + "' , 2019, stan_faktyczny -1 ";
-                    SQLiteCommand createCommand = new SQLiteCommand(Query, db_connect);
-                    createCommand.ExecuteNonQuery();
-                    db_connect.Close();
-                    MessageBox.Show("Książka została wypożyczona");
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-           */ 
+     
         }
 
         //Przycisk Wyjście
